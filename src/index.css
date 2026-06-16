@@ -1,8 +1,54 @@
 @import "tailwindcss";
 
-@theme{
+@theme {
+  /* ---- Color tokens ---- */
+  --color-ink: #0a1420;          /* near-black navy — primary dark bg */
+  --color-ink-soft: #101f33;      /* slightly lighter dark panel */
+  --color-steel: #173049;         /* deep steel blue */
+  --color-brand: #2c5d8c;         /* core brand blue */
+  --color-brand-light: #4d83b8;   /* lighter brand blue for accents */
+  --color-gold: #cd9a44;          /* amber/gold accent */
+  --color-gold-light: #e3bc7a;    /* light gold for highlights on dark */
+  --color-bone: #f5f2ea;          /* warm off-white bg */
+  --color-bone-dim: #ece6d8;      /* slightly deeper bone for alt sections */
+  --color-slate: #5d6b78;         /* muted body text on light */
+  --color-line: rgba(10, 20, 32, 0.1);
+  --color-line-dark: rgba(255, 255, 255, 0.09);
 
+  /* ---- Fonts ---- */
+  --font-display: "Archivo", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* ---- Shadows ---- */
+  --shadow-card: 0 24px 48px -24px rgba(10, 20, 32, 0.35);
+  --shadow-glow: 0 0 60px -10px rgba(205, 154, 68, 0.35);
+
+  /* ---- Animations ---- */
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-rev: marquee-rev 32s linear infinite;
+  --animate-float-slow: float-slow 9s ease-in-out infinite;
+  --animate-float-slower: float-slow 13s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 4s ease-in-out infinite;
 }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -18px, 0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.9; }
+}
+
 
 @layer base {
     :root{
@@ -24,4 +70,77 @@
         scroll-snap-type: mandatory;
         scroll-snap-align: center;        
     }
+
+    body {
+    font-family: var(--font-body);
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+
+
+@layer utilities {
+  /* Blueprint grid background — the signature device.
+     Faint drafting grid, used on dark sections. */
+  .bg-blueprint {
+    background-color: var(--color-ink);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 88px 88px, 88px 88px, 22px 22px, 22px 22px;
+    background-position: -1px -1px;
+  }
+
+  .bg-blueprint-light {
+    background-color: var(--color-bone);
+    background-image:
+      linear-gradient(rgba(10, 20, 32, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 20, 32, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Technical corner brackets — used on cards & framed media */
+  .corner-frame {
+    position: relative;
+  }
+  .corner-frame::before,
+  .corner-frame::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+  }
+  .corner-frame::before {
+    top: -1px; left: -1px;
+    border-top: 2px solid currentColor;
+    border-left: 2px solid currentColor;
+  }
+  .corner-frame::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+  }
+
+  .font-feature-tnum {
+    font-feature-settings: "tnum" 1;
+  }
 }
