@@ -23,20 +23,22 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-blueprint backdrop-blur-xl border-b border-[var(--color-line-dark)] py-3 shadow-[0_20px_50px_-20px_rgba(0,74,173,0.3)]"
+          ? "bg-surface backdrop-blur-xl border-b border-[var(--color-line-dark)] py-2 shadow-[0_20px_50px_-20px_rgba(0,74,173,0.3)]"
           : "bg-transparent border-b border-transparent py-5"
       }`}
     >
-      <nav className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 flex items-center justify-between h-14 relative">
+      <nav className="insideContainer flex items-center justify-between h-14">
         {/* Brand Identity */}
-        <a 
-          href="#home" 
+        <motion.a 
+          href="/" 
           className="flex items-center relative z-50 transition-transform duration-300 hover:scale-[1.02]" 
           onClick={() => setOpen(false)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.90 }}
         >
           {/* Logo remains perfectly visible over the clean light background panel */}
           <img src={logo} alt="JPS Solutions" className="h-9 sm:h-11 w-auto object-contain" />
-        </a>
+        </motion.a>
 
         {/* Desktop Navigation Links */}
         <div className="hidden lg:flex items-center gap-10">
