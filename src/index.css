@@ -123,10 +123,7 @@
     overflow-x: hidden;
   }
 
-  section {
-    min-height: 100vh;
-  }
-
+  
   img {
     display: block;
     max-width: 100%;
@@ -333,5 +330,9 @@
 
 @utility insideContainer{
   @apply relative w-full  max-w-7xl mx-auto px-6 sm:px-8 lg:px-10;
+}
+
+@utility sectionDiv{
+  @apply min-h-screen;
 }
 

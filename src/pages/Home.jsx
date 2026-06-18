@@ -15,13 +15,13 @@ const Home = () =>{
 
             {/* Main Section Code */}
             <div> 
-                <section id="hero"><Hero /></section>
+                <div className="sectionDiv" id="hero"><Hero /></div>
                 
                 <Brand />
-                <section id="about"><About /></section>
-                <section id="services"><Services /></section>
+                <div className="sectionDiv" id="about"><About /></div>
+                <div className="sectionDiv" id="services"><Services /></div>
                 <Cta />
-                <section id="contact"><Contact /></section>
+                <div className="sectionDiv" id="contact"><Contact /></div>
             </div>
             {/* Footer Code */}
             <Footer />
