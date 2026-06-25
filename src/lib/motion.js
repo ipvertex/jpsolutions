@@ -1,0 +1,51 @@
+/**
+ * Centralized Framer Motion variants. Every section imports from here so
+ * the scroll-reveal feel is consistent site-wide instead of each component
+ * inventing its own easing/duration/offset values.
+ */
+
+export const EASE = [0.22, 1, 0.36, 1];
+
+export const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: EASE },
+  },
+};
+
+export const fadeUpSm = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE },
+  },
+};
+
+export const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+};
+
+export const scaleIn = {
+  hidden: { opacity: 0, scale: 0.94 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.55, ease: EASE },
+  },
+};
+
+/** Parent container for staggered children — pair with fadeUp/fadeUpSm on children */
+export const staggerContainer = (stagger = 0.08, delay = 0) => ({
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: stagger, delayChildren: delay },
+  },
+});
+
+/** Standard viewport config for whileInView — fires once, slightly before fully in view */
+export const viewportOnce = { once: true, margin: "-80px" };
+export const viewportOnceTight = { once: true, margin: "-40px" };

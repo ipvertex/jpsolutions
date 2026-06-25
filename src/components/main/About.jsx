@@ -1,195 +1,219 @@
-import { motion } from "framer-motion";
-import { HardHat, ShieldCheck, Award, Clock, Target, Eye } from "lucide-react";
+import { useRef } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { ArrowRight, ShieldCheck, Activity, Award, Briefcase, Crosshair } from "lucide-react";
+import { company } from "../../assets/data";
 
-const About = () => {
-  // Stagger animations for a high-end corporate presentation
-  const containerVariants = {
+export default function About() {
+  const containerRef = useRef(null);
+  const spotlightX = useMotionValue(0);
+  const spotlightY = useMotionValue(0);
+
+  // High-frequency tracker for the premium technical reflection effect
+  const handleInteraction = (e) => {
+    if (!containerRef.current) return;
+    const { left, top } = containerRef.current.getBoundingClientRect();
+    spotlightX.set(e.clientX - left);
+    spotlightY.set(e.clientY - top);
+  };
+
+  // Kinetic spring setup for incredibly smooth scrolling entrance and exit transitions
+  const kineticSpring = {
+    type: "spring",
+    stiffness: 60,
+    damping: 26,
+    mass: 0.9
+  };
+
+  const layoutVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
-  const fadeUpVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: "spring", stiffness: 60, damping: 18 }
+  const slideLeftVariants = {
+    hidden: { opacity: 0, x: -60, filter: "blur(8px)" },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      filter: "blur(0px)",
+      transition: kineticSpring
     }
   };
 
-  // Strategic corporate core highlights
-  const values = [
-    {
-      icon: <ShieldCheck className="text-[var(--color-primary)]" size={24} />,
-      title: "High Quality & Safety Standards",
-      desc: "Absolute compliance with statutory engineering norms to protect your building asset and its occupants."
-    },
-    {
-      icon: <Clock className="text-[var(--color-gold)]" size={24} />,
-      title: "Timely Project Execution",
-      desc: "Delivering turnkey setups efficiently within agreed timelines to avoid commercial operations delay."
-    },
-    {
-      icon: <Award className="text-[var(--color-primary)]" size={24} />,
-      title: "Strong After-Sales Support",
-      desc: "Continuous preventive maintenance and AMC solutions long after the initial handover."
+  const slideRightVariants = {
+    hidden: { opacity: 0, x: 60, filter: "blur(8px)" },
+    visible: { 
+      opacity: 1, 
+      x: 0, 
+      filter: "blur(0px)",
+      transition: kineticSpring
     }
+  };
+
+  const opacityVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.6, ease: "easeOut" } 
+    }
+  };
+
+  const businessMetrics = [
+    { label: "Engineering Excellence", value: "15+ Years", icon: Award },
+    { label: "Turnkey Projects Executed", value: "250+", icon: Briefcase },
+    { label: "Operational Safety Standard", value: "100% Compliant", icon: ShieldCheck },
+    { label: "Client Satisfaction Rating", value: "4.9/5 Avg", icon: Activity }
   ];
 
   return (
-    <section 
-      id="about" 
-      className="relative min-h-screen bg-[var(--color-surface)] py-24 lg:py-32 px-6 sm:px-8 lg:px-12 flex items-center justify-center overflow-hidden"
+    <section
+      ref={containerRef}
+      onMouseMove={handleInteraction}
+      id="about"
+      className="mainContainer bg-white relative flex flex-col justify-center overflow-hidden py-24 lg:py-32 select-none"
     >
-      {/* Light blueprint grid accent for classic construction layout context */}
-      <div className="absolute inset-0 bg-blueprint-light pointer-events-none opacity-30" />
+      {/* 1. Structural Blueprint Matrix Background Layer */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,60,93,0.012)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,60,93,0.012)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
+      
+      {/* 2. Interactive Spotlight Background Aura */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 hidden md:block"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              500px circle at ${spotlightX}px ${spotlightY}px,
+              rgba(11, 60, 93, 0.03),
+              transparent 80%
+            )
+          `
+        }}
+      />
 
-      <div className="mx-auto max-w-7xl w-full grid lg:grid-cols-12 gap-16 items-start relative z-10">
-        
-        {/* =========================================================
-            LEFT PANEL: EXPERTISE, STATS, AND VISION/MISSION CARDS
-            ========================================================= */}
+      <motion.div 
+        className="insideContainer z-20 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 items-center"
+        variants={layoutVariants}
+        initial="hidden"
+        whileInView="visible"
+        exit="hidden"
+        viewport={{ once: false, amount: 0.2 }}
+      >
+        {/* --- LEFT HAND: INDUSTRIAL VISUAL CONTAINER BLOCK --- */}
         <motion.div 
-          className="lg:col-span-5 space-y-6 order-2 lg:order-1 w-full"
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="lg:col-span-5 relative w-full flex justify-center"
+          variants={slideLeftVariants}
         >
-          {/* Main Statement Box with Classic Industrial Frame Accent */}
-          <div className="corner-frame bg-white border border-[var(--color-line)] p-8 rounded-2xl shadow-card space-y-6">
-            <h4 className="font-['Archivo'] text-lg font-bold text-[var(--color-navy)] uppercase tracking-wider border-b border-slate-100 pb-3">
-              Corporate Overview
-            </h4>
-            <p className="text-sm text-[var(--color-charcoal)] leading-relaxed font-medium">
-              We provide integrated infrastructure systems across commercial malls, high-rise buildings, and industrial complexes. Our team is strictly committed to engineering solutions with structural reliability.
-            </p>
+          {/* Framer Decorative Grid Corner Markers */}
+          <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-slate-200 pointer-events-none" />
+          <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-slate-200 pointer-events-none" />
+
+          <div className="relative w-full aspect-[4/5] max-w-[400px] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-[0_30px_60px_-20px_rgba(11,60,93,0.1)] group/img">
+            {/* Real Industrial MEP Field Production Photo */}
+            <img 
+              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800" 
+              alt="JPS Solutions Infrastructure Operations" 
+              className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover/img:scale-105"
+            />
             
-            {/* Slogan callout block */}
-            <div className="bg-[var(--color-surface-alt)] border-l-4 border-[var(--color-gold)] p-4 rounded-r-lg">
-              <span className="font-['Archivo'] font-bold text-xs uppercase tracking-widest text-[var(--color-navy)] block">
-                Corporate Promise
-              </span>
-              <span className="text-sm italic font-semibold text-[var(--color-primary)] mt-1 block">
-                "Quality Work, Reliable Service"
-              </span>
-            </div>
-          </div>
-
-          {/* Simple, Professional Stat Callout */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white border border-[var(--color-line)] p-6 rounded-xl shadow-sm text-center">
-              <span className="block font-['Archivo'] text-3xl font-black text-[var(--color-navy)] font-feature-tnum">
-                100%
-              </span>
-              <span className="block text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider mt-1">
-                Compliance Verified
-              </span>
-            </div>
-            <div className="bg-white border border-[var(--color-line)] p-6 rounded-xl shadow-sm text-center">
-              <span className="block font-['Archivo'] text-3xl font-black text-[var(--color-primary)] font-feature-tnum">
-                End-to-End
-              </span>
-              <span className="block text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider mt-1">
-                Turnkey Execution
-              </span>
-            </div>
-          </div>
-
-          {/* Vision & Mission Cards Grid Block */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Our Mission Card */}
-            <div className="bg-white border border-[var(--color-line)] p-5 rounded-xl shadow-sm space-y-2">
-              <div className="flex items-center gap-2 text-[var(--color-primary)]">
-                <Target size={18} />
-                <h5 className="font-['Archivo'] text-sm font-bold text-[var(--color-navy)] uppercase tracking-wider">
-                  Our Mission
-                </h5>
+            {/* Integrated Dynamic Technical Overlay Overlay Block */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80" />
+            
+            {/* Floating Live Data Badge inside Image */}
+            <div className="absolute bottom-6 inset-x-6 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl flex items-center justify-between">
+              <div className="space-y-0.5">
+                <span className="font-mono text-[8px] font-bold text-amber-400 uppercase tracking-widest block">// Capability Node</span>
+                <span className="text-white font-extrabold text-xs tracking-wider uppercase block">Safety First Execution</span>
               </div>
-              <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
-                To deliver high-quality, reliable, and sustainable infrastructure solutions that exceed client expectations through innovation and excellence.
-              </p>
-            </div>
-
-            {/* Our Vision Card */}
-            <div className="bg-white border border-[var(--color-line)] p-5 rounded-xl shadow-sm space-y-2">
-              <div className="flex items-center gap-2 text-[var(--color-gold)]">
-                <Eye size={18} />
-                <h5 className="font-['Archivo'] text-sm font-bold text-[var(--color-navy)] uppercase tracking-wider">
-                  Our Vision
-                </h5>
-              </div>
-              <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
-                To be a leading infrastructure solutions provider recognized for our integrity, quality, and commitment to building a better tomorrow.
-              </p>
+              <Crosshair size={14} className="text-amber-400 animate-spin" style={{ animationDuration: '8s' }} />
             </div>
           </div>
         </motion.div>
 
-        {/* =========================================================
-            RIGHT PANEL: HIGH-ENGAGEMENT PROFILE TEXT CONTENT
-            ========================================================= */}
+        {/* --- RIGHT HAND: PREMIUM TYPOGRAPHY MATRIX & HOVER ROWS --- */}
         <motion.div 
-          className="lg:col-span-7 space-y-8 order-1 lg:order-2 text-center lg:text-left"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          className="lg:col-span-7 space-y-10 text-left"
+          variants={slideRightVariants}
         >
-          {/* Section Label */}
-          <motion.div variants={fadeUpVariants} className="inline-flex items-center gap-2 bg-[var(--color-surface-alt)] px-3 py-1.5 rounded text-xs font-bold uppercase tracking-widest text-[var(--color-primary)] border border-[var(--color-line)]">
-            <HardHat size={14} />
-            Who We Are
-          </motion.div>
+          {/* Premium Tech Category Tag */}
+          <div className="inline-flex items-center gap-2.5 bg-slate-100/80 border border-slate-200 px-4 py-2 rounded-md">
+            <span className="flex h-1.5 w-1.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
+            </span>
+            <span className="font-mono text-[9px] font-black uppercase tracking-[0.25em] text-slate-500">
+              01 // Corporate Charter
+            </span>
+          </div>
 
-          {/* Section Heading */}
-          <motion.h2 
-            variants={fadeUpVariants}
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--color-navy)] font-['Archivo'] leading-tight"
-          >
-            A Trusted Name in MEP & <br />
-            <span className="text-[var(--color-primary)]">Infrastructure Services</span>
-          </motion.h2>
+          {/* Spacious, Breathing Copy Architecture */}
+          <div className="space-y-5">
+            <motion.h2 
+              className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] uppercase"
+              variants={opacityVariants}
+            >
+              Built for precision. <br />
+              Trusted for <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-700">Performance.</span>
+            </motion.h2>
+            
+            <motion.p 
+              className="text-slate-500 text-sm sm:text-base font-medium max-w-xl leading-relaxed text-balance"
+              variants={opacityVariants}
+            >
+              {company.aboutPitch || "JPS Solutions delivers elite turnkey MEP and industrial engineering structures across Ghaziabad and Delhi NCR. We bridge the gap between engineering blueprints and field maintenance with absolute statutory compliance and rigorous technical oversight."}
+            </motion.p>
+          </div>
 
-          {/* Detailed Informative Copywriting Block */}
-          <motion.div variants={fadeUpVariants} className="space-y-4 text-base text-[var(--color-charcoal)] leading-relaxed font-normal">
-            <p>
-              JPS Solutions is an established firm specializing in complete engineering and mechanical contracting fields. We provide comprehensive end-to-end solutions built on the pillars of safety, long-term efficiency, and predictable project control.
-            </p>
-            <p>
-              With a veteran team of construction professionals and a deeply client-focused management structure, we engineer cost-effective plant, building, and utility networks engineered to safely support modern enterprise work.
-            </p>
-          </motion.div>
+          {/* HIGH-END HOVER ROWS WITH CORNER GLOW EFFECT */}
+          <div className="border-t border-slate-100 pt-6 space-y-2">
+            {businessMetrics.map((metric, index) => {
+              const MetricIcon = metric.icon;
+              return (
+                <motion.div 
+                  key={metric.label}
+                  className="group/metric relative flex items-center justify-between p-4 bg-slate-50/40 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-200/60 transition-all duration-300 overflow-hidden cursor-default"
+                  variants={opacityVariants}
+                  custom={index}
+                >
+                  {/* Clean Technical Highlight Line that expands on row hover */}
+                  <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary scale-y-0 group-hover/metric:scale-y-100 transition-transform duration-300 origin-center" />
+                  
+                  <div className="flex items-center gap-4 relative z-10">
+                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 transition-all duration-300 group-hover/metric:bg-primary group-hover/metric:text-white group-hover/metric:scale-105 shrink-0 shadow-sm">
+                      <MetricIcon size={16} />
+                    </div>
+                    <span className="text-slate-800 font-bold text-sm sm:text-base tracking-tight transition-colors group-hover/metric:text-primary">
+                      {metric.label}
+                    </span>
+                  </div>
 
-          {/* Key Value Matrices Lists */}
-          <motion.div variants={fadeUpVariants} className="pt-4 grid sm:grid-cols-1 gap-4 text-left">
-            {values.map((item, index) => (
-              <div 
-                key={index} 
-                className="flex items-start gap-4 p-5 bg-white border border-[var(--color-line)] rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
-              >
-                <div className="p-3 bg-[var(--color-surface-alt)] rounded-lg shrink-0">
-                  {item.icon}
-                </div>
-                <div>
-                  <h3 className="font-['Archivo'] font-bold text-base text-[var(--color-navy)]">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-[var(--color-text-muted)] mt-1 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+                  <span className="font-mono font-black text-slate-900 text-sm sm:text-base font-feature-tnum relative z-10 pl-4 transition-colors group-hover/metric:text-primary">
+                    {metric.value}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* PREMIUM OUTLINE CTA BUTTON */}
+          <motion.div className="pt-2" variants={opacityVariants}>
+            <a 
+              href="#contact"
+              className="relative inline-flex items-center justify-center px-8 h-12 bg-slate-900 text-white font-mono text-[11px] font-bold uppercase tracking-[0.15em] rounded-xl transition-all duration-300 shadow-[0_15px_30px_-10px_rgba(15,23,42,0.2)] hover:bg-primary group overflow-hidden border border-slate-800"
+            >
+              <span className="absolute top-0 left-0 w-2 h-[2px] bg-amber-500 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:w-full" />
+              <span className="absolute bottom-0 right-0 w-2 h-[2px] bg-amber-500 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:w-full" />
+              
+              <span className="relative z-10 flex items-center gap-2.5">
+                Learn More About Us
+                <ArrowRight size={13} className="text-amber-500 transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
+            </a>
           </motion.div>
         </motion.div>
 
-      </div>
+      </motion.div>
     </section>
   );
-};
-
-export default About;
+}

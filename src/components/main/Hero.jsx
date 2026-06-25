@@ -1,162 +1,191 @@
-import { motion } from "framer-motion";
-import { ArrowRight, HardHat, Building2, CheckCircle } from "lucide-react";
+import { useRef } from "react";
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { ArrowUpRight, ShieldCheck, HardHat } from "lucide-react";
 
-const Hero = () => {
-  // Staggered classic typography animation variants
-  const slideUpContainer = {
+export default function Hero() {
+  const heroRef = useRef(null);
+  const spotlightX = useMotionValue(0);
+  const spotlightY = useMotionValue(0);
+
+  const handleInteraction = (e) => {
+    if (!heroRef.current) return;
+    const { left, top } = heroRef.current.getBoundingClientRect();
+    spotlightX.set(e.clientX - left);
+    spotlightY.set(e.clientY - top);
+  };
+
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
     },
   };
 
-  const slideUpItem = {
-    hidden: { opacity: 0, y: 30 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 70, damping: 18 },
+      transition: { type: "spring", stiffness: 100, damping: 24 },
     },
   };
 
+  const marqueeKeywords = [
+    "Electrical Contractor Ghaziabad",
+    "MEP Services Delhi NCR",
+    "Industrial HVAC Engineering",
+    "Fire Safety Compliance",
+    "Rooftop Solar Installation",
+    "EV Charger Infrastructure"
+  ];
+
   return (
     <section
+      ref={heroRef}
+      onMouseMove={handleInteraction}
       id="home"
-      className="relative min-h-screen bg-[var(--color-surface)] flex items-center justify-center pt-24 pb-16 lg:pt-28 lg:pb-20 px-6 sm:px-8 lg:px-12 overflow-hidden"
+      className="mainContainer flex flex-col justify-between bg-slate-50 relative lg:h-screen lg:min-h-0 lg:pt-24 lg:pb-0 pb-12 select-none"
     >
-      {/* Subtle traditional light blueprint line mesh pattern for background texture */}
-      <div className="absolute inset-0 bg-blueprint-light pointer-events-none opacity-40" />
+      {/* Structural Tech Grid Layer overlaying the clean background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,60,93,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,60,93,0.015)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none z-10" />
 
-      {/* =========================================================
-          MAIN BUSINESS PRESENTATION GRID
-          ========================================================= */}
-      <div className="mx-auto max-w-7xl w-full grid lg:grid-cols-12 gap-12 items-center relative z-10">
-        
-        {/* LEFT COLUMN: Classic Business Introduction & Details */}
-        <motion.div
-          className="lg:col-span-6 space-y-8 text-center lg:text-left"
-          variants={slideUpContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Authentic Construction Business Tag */}
-          <motion.div 
-            variants={slideUpItem}
-            className="inline-flex items-center gap-2 border-l-4 border-[var(--color-primary)] bg-[var(--color-surface-alt)] px-4 py-2 shadow-sm"
-          >
-            <HardHat size={16} className="text-[var(--color-gold)]" />
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-navy)] font-['Archivo']">
-              Complete MEP & Infrastructure Services
-            </span>
-          </motion.div>
-
-          {/* Master Structural Headline */}
-          <motion.h1
-            variants={slideUpItem}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--color-navy)] leading-[1.1] font-['Archivo']"
-          >
-            All-In-One <br />
-            <span className="text-[var(--color-primary)]">Infra Solutions</span> <br />
-            Under One Roof
-          </motion.h1>
-
-          {/* Clean Commercial Description */}
-          <motion.p
-            variants={slideUpItem}
-            className="text-base sm:text-lg text-[var(--color-charcoal)] max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal"
-          >
-            JPS Solutions is your trusted corporate partner for high-quality engineering and physical contracting work. We design, install, and systematically maintain modern mechanical, electrical, and plumbing infrastructure for commercial complexes and offices.
-          </motion.p>
-
-          {/* Core Construction Segments (Traditional Checked List Structure) */}
+      {/* CENTERPIECE: ARCHITECTURAL CONTENT GRID */}
+      <div className="insideContainer my-auto z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          
+          {/* LEFT CONTENT COLUMN: CRISP, RE-SCALED TYPOGRAPHY */}
           <motion.div
-            variants={slideUpItem}
-            className="space-y-3 max-w-md mx-auto lg:mx-0 text-left border-t border-slate-200 pt-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 space-y-6 lg:space-y-8"
           >
-            <div className="flex items-center gap-3">
-              <CheckCircle size={18} className="text-[var(--color-primary)] shrink-0" />
-              <p className="text-sm font-semibold text-[var(--color-navy)]">
-                <span className="font-bold text-[var(--color-primary)]">Electrical Systems:</span> HT/LT distribution networks & power infrastructures.
-              </p>
+            {/* Elegant Operational State Badge */}
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-3 bg-white border border-slate-200 shadow-sm px-3.5 py-1.5 rounded-full">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
+              </span>
+              <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                A Govt. Approved Electrical Contractor
+              </span>
+            </motion.div>
+
+            {/* Down-scaled Title Hierarchy to Fit Screen Heights */}
+            <div className="space-y-4">
+              <motion.h1
+                variants={itemVariants}
+                className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.15] uppercase"
+              >
+                MEP & Infrastructure <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-700">
+                  Contractor
+                </span> <br />
+                <span className="text-slate-800 text-2xl sm:text-3xl lg:text-4xl font-extrabold normal-case tracking-normal block mt-1">
+                  in Ghaziabad & Delhi NCR.
+                </span>
+              </motion.h1>
+
+              {/* Relaxed line-height description block */}
+              <motion.p
+                variants={itemVariants}
+                className="text-slate-500 text-sm sm:text-base font-medium max-w-lg leading-relaxed text-balance pt-1"
+              >
+                We deliver end-to-end electrical engineering, industrial HVAC, fire safety systems, and renewable solar grids. From certified engineering layout designs to complete statutory regulatory approvals and ongoing maintenance, we ensure seamless execution under a single point of accountability.
+              </motion.p>
             </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle size={18} className="text-[var(--color-primary)] shrink-0" />
-              <p className="text-sm font-semibold text-[var(--color-navy)]">
-                <span className="font-bold text-[var(--color-primary)]">Mechanical & HVAC:</span> Heavy ventilation and industrial pipeline systems.
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle size={18} className="text-[var(--color-primary)] shrink-0" />
-              <p className="text-sm font-semibold text-[var(--color-navy)]">
-                <span className="font-bold text-[var(--color-primary)]">Plumbing & Civil:</span> Professional commercial drainage and site maintenance.
-              </p>
-            </div>
+
+            {/* PROFESSIONAL ARCHITECTURAL BUTTON SET */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 pt-2">
+              <a
+                href="#contact"
+                className="relative inline-flex items-center justify-center px-7 h-12 bg-slate-900 text-white font-mono text-[11px] font-bold uppercase tracking-[0.15em] rounded-xl transition-all duration-300 shadow-[0_15px_30px_-10px_rgba(15,23,42,0.2)] hover:bg-primary group overflow-hidden border border-slate-800"
+              >
+                {/* Tech Outlines that activate on hover */}
+                <span className="absolute top-0 left-0 w-2 h-[2px] bg-amber-500 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:w-full" />
+                <span className="absolute bottom-0 right-0 w-2 h-[2px] bg-amber-500 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:w-full" />
+                
+                <span className="relative z-10 flex items-center gap-2.5">
+                  Request Site Assessment
+                  <ArrowUpRight size={14} className="text-amber-500 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </a>
+
+              <a
+                href="#services"
+                className="inline-flex items-center justify-center px-7 h-12 text-slate-800 font-mono text-[11px] font-bold uppercase tracking-[0.15em] rounded-xl border-2 border-slate-200 bg-white/40 backdrop-blur-sm transition-all duration-300 hover:border-slate-900 hover:bg-slate-900 hover:text-white"
+              >
+                Our Capabilities
+              </a>
+            </motion.div>
           </motion.div>
 
-          {/* Standard Corporate Action Buttons */}
+          {/* RIGHT COLUMN: PREMIUM MEP PRODUCTION INFRASTRUCTURE IMAGE */}
           <motion.div
-            variants={slideUpItem}
-            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2"
+            initial={{ opacity: 0, scale: 0.98, x: 30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ type: "spring", stiffness: 70, damping: 20, delay: 0.25 }}
+            className="lg:col-span-5 relative w-full flex justify-center"
           >
-            <a
-              href="#contact"
-              className="w-full sm:w-auto text-center bg-[var(--color-navy)] hover:bg-[var(--color-primary)] text-white px-8 py-4 rounded-lg font-['Archivo'] font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300 shadow-md flex items-center justify-center gap-2 group"
-            >
-              Get Corporate Quote
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#services"
-              className="w-full sm:w-auto text-center border-2 border-[var(--color-navy)] text-[var(--color-navy)] hover:bg-[var(--color-surface-alt)] px-8 py-3.5 rounded-lg font-['Archivo'] font-bold text-sm uppercase tracking-[0.12em] transition-all duration-300"
-            >
-              Our Project Scope
-            </a>
-          </motion.div>
-        </motion.div>
+            {/* Outer Architectural Framing Ticks */}
+            <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-primary/20 pointer-events-none" />
+            <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-right-2 border-primary/20 pointer-events-none" />
 
-        {/* =========================================================
-            RIGHT COLUMN: PREMIUM BACKGROUND VIDEO / IMAGE THEATER
-            ========================================================= */}
-        <motion.div
-          className="lg:col-span-6 w-full h-[400px] sm:h-[500px] lg:h-[600px] relative flex items-center justify-center"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-        >
-          {/* Framed Architecture Panel with Classic Industrial Corner Outlines */}
-          <div className="w-full h-full bg-slate-200 overflow-hidden shadow-2xl relative border-2 border-slate-200/80 rounded-2xl group">
-            
-            {/* Cinematic background showcase image or video placeholder */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80"
-              className="w-full h-full object-cover select-none pointer-events-none scale-105 transition-transform duration-1000 group-hover:scale-100"
-            >
-              {/* <source src="your-construction-clip.mp4" type="video/mp4" /> */}
-            </video>
+            {/* Industrial Image Frame */}
+            <div className="relative w-full aspect-[4/5] max-w-[380px] lg:max-w-[360px] rounded-2xl overflow-hidden bg-slate-900 shadow-[0_25px_50px_-12px_rgba(15,23,42,0.1)] group/img border border-slate-200">
+              <img
+                src="https://images.unsplash.com/photo-1621905252507-b354bc25edac?auto=format&fit=crop&q=80&w=800"
+                alt="Turnkey MEP Engineering Industrial Site Execution"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-103"
+              />
 
-            {/* Industrial Overlay Mask Layer */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy)]/40 via-transparent to-transparent pointer-events-none" />
-
-            {/* Floating Office Project Counter Overlay Tag */}
-            <div className="absolute bottom-6 left-6 bg-white border-l-4 border-[var(--color-gold)] py-3 px-5 shadow-xl rounded-r-md flex items-center gap-3">
-              <Building2 className="text-[var(--color-navy)]" size={24} />
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 font-mono">Target Arenas</p>
-                <p className="text-sm font-black text-[var(--color-navy)] font-['Archivo']">Malls, High-Rises & Plants</p>
+              {/* Floating Blueprint Glass Decal Card */}
+              <div className="absolute bottom-5 inset-x-5 bg-slate-950/90 backdrop-blur-xl border border-white/10 p-4 rounded-xl flex items-center justify-between shadow-2xl">
+                <div className="space-y-0.5">
+                  <span className="font-mono text-[8px] font-black text-amber-500 uppercase tracking-widest block">
+                    // Site Engineering
+                  </span>
+                  <span className="text-white font-bold text-xs tracking-tight block">
+                    Turnkey Plant Distribution
+                  </span>
+                </div>
+                <div className="flex gap-2 text-white/40">
+                  <HardHat size={14} className="text-white animate-pulse" />
+                  <ShieldCheck size={14} className="text-white" />
+                </div>
               </div>
+
+              {/* Ambient Interaction Mirror Track */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-0 group-hover/img:opacity-100 transition-opacity duration-300"
+                style={{
+                  background: useMotionTemplate`
+                    radial-gradient(
+                      200px circle at ${spotlightX}px ${spotlightY}px,
+                      rgba(255, 255, 255, 0.12),
+                      transparent 80%
+                    )
+                  `,
+                }}
+              />
             </div>
+          </motion.div>
 
-          </div>
-        </motion.div>
+        </div>
+      </div>
 
+      {/* BASE STRIP: HIGH-PERFORMANCE HORIZONTAL TECH-TICKER MARQUEE */}
+      <div className="w-full border-y border-slate-200/80 bg-white py-3.5 pointer-events-none overflow-hidden z-20 shadow-[0_-1px_3px_rgba(0,0,0,0.01)] shrink-0">
+        <div className="flex w-[200%] animate-marquee whitespace-nowrap">
+          {[...marqueeKeywords, ...marqueeKeywords].map((term, index) => (
+            <div key={index} className="flex items-center font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-slate-400 mx-8">
+              <span>{term}</span>
+              <span className="text-amber-500 font-black ml-16 font-feature-tnum">//</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}
