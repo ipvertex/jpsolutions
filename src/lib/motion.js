@@ -1,8 +1,4 @@
-/**
- * Centralized Framer Motion variants. Every section imports from here so
- * the scroll-reveal feel is consistent site-wide instead of each component
- * inventing its own easing/duration/offset values.
- */
+
 
 export const EASE = [0.22, 1, 0.36, 1];
 

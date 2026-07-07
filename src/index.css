@@ -40,6 +40,10 @@
   50% { opacity: 0.85; }
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 @layer base {
   * {
     margin: 0;
@@ -84,7 +88,7 @@
 }
 
 @utility mainContainer{
-  @apply min-h-screen py-16 md:py-24 overflow-hidden z-10; 
+  @apply min-h-screen relative py-16 md:py-24 overflow-hidden z-20; 
 }
 
 @utility insideContainer {

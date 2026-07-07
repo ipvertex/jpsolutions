@@ -1,121 +1,157 @@
-import { memo } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { services, servicesIntro } from "../../assets/data";
+import { ArrowRight, Check } from "lucide-react";
+import { servicesIntro, services } from "../../data/content";
 
-// Curated high-resolution Unsplash assets specific to your MEP & Infrastructure niches
-const serviceImages = [
-  "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=600", // Solar
-  "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=600", // EV Charger
-  "https://images.unsplash.com/photo-1621905252507-b354bc25edac?auto=format&fit=crop&q=80&w=600", // Electrical Works
-  "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=600", // Panels
-  "https://images.unsplash.com/photo-1599740831289-4451baba00f7?auto=format&fit=crop&q=80&w=600", // Fire Fighting
-  "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=600", // Plumbing
-  "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600", // HVAC
-  "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=600", // Civil Works
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600", // Waterproofing
-  "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&q=80&w=600", // Compliance
-];
+const Services = () => {
+  // Premium staggered animation physics
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    },
+  };
 
-const ServiceCard = memo(function ServiceCard({ icon: Icon, title, description, items, index }) {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { type: "spring", stiffness: 50, damping: 20 } 
+    },
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ type: "spring", stiffness: 80, damping: 22, delay: (index % 3) * 0.08 }}
-      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-[0_4px_20px_-6px_rgba(15,23,42,0.02)] hover:shadow-[0_25px_50px_-15px_rgba(11,60,93,0.1)] hover:border-slate-300 transition-all duration-400 flex flex-col h-full"
-    >
-      {/* Media Window Container */}
-      <div className="relative w-full aspect-[16/10] bg-slate-900 overflow-hidden shrink-0">
-        <img
-          src={serviceImages[index] || serviceImages[0]}
-          alt={`${title} Engineering Execution`}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-104"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent" />
+    <section id="services" className="mainContainer">
 
-        {/* Floating Mid-Axis Icon Badge */}
-        <div className="absolute -bottom-6 left-6 z-20 w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-primary shadow-md group-hover:bg-primary group-hover:text-white group-hover:scale-105 transition-all duration-300">
-          <Icon size={18} strokeWidth={2.25} />
-        </div>
-      </div>
-
-      {/* Structured Content Panel */}
-      <div className="p-6 sm:p-7 pt-9 flex flex-col justify-between flex-1 space-y-5">
-        <div className="space-y-3">
-          <h3 className="font-sans font-black text-slate-900 text-base sm:text-lg tracking-tight leading-snug uppercase group-hover:text-primary transition-colors">
-            {title}
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
-            {description}
-          </p>
-
-          {/* Sub-Service Scope Checkpoints */}
-          <ul className="space-y-2 pt-2 border-t border-slate-100">
-            {items.map((item) => (
-              <li key={item} className="flex items-start gap-2 text-xs text-slate-600 font-bold">
-                <span className="mt-1.5 h-1.5 w-1.5 bg-amber-500 rounded-full shrink-0" />
-                <span className="leading-snug">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Action Trigger Link */}
-        <div className="pt-2">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-1 text-xs font-mono font-black uppercase tracking-wider text-primary group-hover:text-amber-500 transition-colors"
-          >
-            Request Details
-            <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  );
-});
-
-export default function Services() {
-  return (
-    <section id="services" className="mainContainer bg-slate-50 relative py-24 lg:py-32 overflow-hidden select-none">
-      {/* Engineering Blueprint Underlay Grid Layer */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,60,93,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,60,93,0.015)_1px,transparent_1px)] bg-[size:48px_48px] pointer-events-none" />
-
-      <div className="insideContainer z-20 space-y-12 lg:space-y-16">
+      <div className="insideContainer">
         
-        {/* Symmetric Spacious Section Headers */}
-        <div className="flex flex-col items-start space-y-3 max-w-3xl border-b border-slate-200 pb-8">
-          {/* Section Category Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 bg-white border border-slate-200 shadow-sm px-3.5 py-1.5 rounded-full mb-1">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-            </span>
-            <span className="font-mono text-[9px] font-black uppercase tracking-[0.25em] text-slate-500">
-              {servicesIntro.eyebrow}
-            </span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl font-black uppercase text-slate-900 tracking-tight leading-none">
-            {servicesIntro.heading}
-          </h2>
+        {/* SECTION HEADER - Editorial High-Impact */}
+        <div className="text-center mb-12 flex flex-col items-center">
           
-          <p className="text-slate-500 text-sm sm:text-base font-medium max-w-2xl leading-relaxed text-balance pt-1">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-background backdrop-blur-md shadow-sm border border-slate-200 mb-8 transition-all hover:shadow-md"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-highlight opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
+            </span>
+            <span className="text-xs sm:text-sm font-bold tracking-[0.15em] text-primary uppercase">{servicesIntro.eyebrow}</span>
+          </motion.div>
+
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-[2.5rem] sm:text-4xl lg:text-5xl font-black tracking-tighter text-foreground leading-[1.05] mb-6"
+          >
+            Comprehensive <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-700">Infrastructure</span> <br className="hidden sm:block" />
+            & <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-amber-500">MEP Solutions</span>
+          </motion.h2>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg text-slate-600 leading-relaxed font-medium max-w-4xl"
+          >
             {servicesIntro.body}
-          </p>
+          </motion.p>
         </div>
 
-        {/* 3-COLUMN STRUCTURED SERVICE GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-          {services.map((service, i) => (
-            <ServiceCard key={service.title} index={i} {...service} />
-          ))}
-        </div>
+        {/* ELITE IMAGE-DRIVEN SERVICES GRID */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10"
+        >
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <motion.div 
+                key={index}
+                variants={cardVariants}
+                className="group relative bg-background rounded-[2rem] flex flex-col shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-100 overflow-hidden hover:shadow-[0_20px_50px_-15px_rgba(11,60,93,0.2)] transition-all duration-700 hover:-translate-y-2 cursor-pointer"
+              >
+                {/* Image Header with Parallax & Gradient Overlay */}
+                {/* Note: Removed the icon from here because 'overflow-hidden' clips it */}
+                <div className="relative h-60 w-full overflow-hidden shrink-0 bg-slate-900">
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] ease-out group-hover:scale-110"
+                    style={{ backgroundImage: `url(${service.image})` }}
+                  ></div>
+                  
+                  {/* Deep Vignette overlay for premium depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/80 via-[#0F172A]/20 to-transparent"></div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-8 pt-10 flex flex-col flex-grow relative z-10 bg-background">
+                  
+                  {/* Floating Icon (MOVED HERE to avoid overflow clipping) */}
+                  <div className="absolute -top-8 right-8 w-16 h-16 rounded-2xl bg-background backdrop-blur-xl border border-background/30 text-primary flex items-center justify-center shadow-xl group-hover:bg-highlight group-hover:border-highlight group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 z-50">
+                    <Icon className="w-7 h-7 drop-shadow-md" strokeWidth={2} />
+                  </div>
+                  
+                  <h3 className="text-[1.35rem] font-black text-foreground mb-3 tracking-tight group-hover:text-primary transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-slate-500 text-sm leading-relaxed font-medium mb-8 flex-grow">
+                    {service.description}
+                  </p>
+
+                  {/* Animated Divider */}
+                  <div className="h-px w-full bg-slate-100 mb-6 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 h-full bg-highlight w-0 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+                  </div>
+
+                  {/* Refined Minimalist Bullet Points */}
+                  <ul className="space-y-3">
+                    {service.items.slice(0, 3).map((item, i) => (
+                      <li key={i} className="flex items-start text-[13px] font-semibold text-slate-600 group-hover:text-slate-900 transition-colors duration-300">
+                        <div className="mt-[2px] mr-3 rounded-full bg-background text-primary p-0.5 group-hover:bg-primary group-hover:text-background transition-colors duration-300">
+                          <Check className="w-3 h-3" strokeWidth={3} />
+                        </div>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Global CTA for Services */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-20 text-center flex justify-center"
+        >
+          <a href="#contact" className="group relative overflow-hidden rounded-xl bg-foreground border border-slate-700 px-10 py-5 font-bold text-background shadow-2xl shadow-foreground/20 hover:shadow-foreground/40 transition-all duration-300 flex items-center gap-4 hover:-translate-y-1">
+            <span className="relative z-10 tracking-wide">Discuss Your Project Requirements</span>
+            <div className="relative z-10 p-2 rounded-lg bg-background/10 group-hover:bg-accent transition-colors duration-300">
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </div>
+            {/* Subtle glow overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/5 to-transparent -translate-x-full group-hover:animate-[marquee_2s_linear_infinite]"></div>
+          </a>
+        </motion.div>
 
       </div>
     </section>
   );
-}
+};
+
+export default Services;

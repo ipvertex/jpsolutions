@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block unnecessary system files or admin paths if you have any
+Disallow: /api/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://www.jpssolution.in/sitemap.xml

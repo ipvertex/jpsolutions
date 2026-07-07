@@ -1,10 +1,6 @@
 import { memo } from "react";
 
-/**
- * The small numbered label above every section heading, e.g. "01 — About Us".
- * `tone` controls the line/text color so it reads correctly on light or dark
- * section backgrounds.
- */
+
 const TONE = {
   gold: "text-gold bg-gold",
   brand: "text-brand bg-brand",

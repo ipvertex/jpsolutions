@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback,useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Phone, ArrowRight } from "lucide-react";
 import { navLinks, company } from "../../assets/data";
@@ -7,26 +7,62 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#home");
+  
+  // NEW: Ref to ignore observer during manual smooth scroll
+  const isScrollingRef = useRef(false);
 
-  // Hardware-accelerated passive scroll observer
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open to prevent screen jank
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // FIX: Ignore observer updates if we are currently manually scrolling
+        if (isScrollingRef.current) return;
 
-  const handleNavClick = (href) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveLink(`#${entry.target.id}`);
+          }
+        });
+      },
+      { rootMargin: "-80px 0px -70% 0px" }
+    );
+
+    navLinks.forEach((link) => {
+      const el = document.getElementById(link.href.replace("#", ""));
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = useCallback((e, href) => {
+    e.preventDefault();
+    
+    // 1. Mark as manual scroll
+    isScrollingRef.current = true;
     setActiveLink(href);
     setMobileOpen(false);
-  };
+
+    const id = href.replace("#", "");
+    const el = document.getElementById(id);
+    if (el) {
+      window.scrollTo({ 
+        top: el.offsetTop - 80, 
+        behavior: "smooth" 
+      });
+    }
+
+    // 2. Re-enable observer after animation finishes 
+    // 1000ms is usually enough for smooth scroll to finish
+    setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 1000);
+  }, []);
 
   return (
     <header
@@ -41,189 +77,133 @@ export default function Navbar() {
             : "lg:h-20 lg:bg-transparent lg:border-transparent lg:px-0 lg:shadow-none"
         }`}
       >
-        {/* --- BRAND IDENTITY LOGO NODE --- */}
-        <motion.a
-          href="#home"
-          onClick={() => handleNavClick("#home")}
-          className="flex items-center relative z-50 gap-3 cursor-pointer"
-          whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.99 }}
-        >
+        {/* Logo */}
+        <a href="/" className="flex items-center relative z-50 gap-3 cursor-pointer">
           <img
             src="/logo.png"
             alt={`${company.name} Logo`}
-            className={`w-auto object-contain transition-all duration-500 ease-in-out ${
-              scrolled 
-                ? "h-9 max-lg:h-10" 
-                : "h-10 sm:h-12 lg:h-14 drop-shadow-[0_2px_8px_rgba(11,60,93,0.08)] max-lg:h-10"
+            className={`w-auto object-contain transition-all duration-500 ${
+              scrolled ? "h-9 max-lg:h-10" : "h-10 sm:h-12 lg:h-14 max-lg:h-10"
             }`}
           />
-          <div className="hidden sm:block border-l-2 border-primary/15 pl-3">
-            <span className={`font-black text-primary tracking-wider block uppercase transition-all duration-500 ${
-              scrolled ? "text-xs" : "text-sm lg:text-base"
-            }`}>
-              {company.name}
-            </span>
-            <span className={`text-accent font-bold uppercase tracking-widest block transition-all duration-500 ${
-              scrolled ? "text-[8px] mt-0.5" : "text-[10px] mt-0.5 lg:mt-1"
-            }`}>
-              Infra Matrix
-            </span>
-          </div>
-        </motion.a>
+        </a>
 
-        {/* --- DESKTOP FLOATING CAPSULE NAVIGATION TRACK --- */}
+        {/* ── Desktop Nav ── */}
         <div className="hidden lg:flex items-center bg-primary/5 border border-primary/5 rounded-full p-1.5 relative">
-          {navLinks.map((link) => {
-            const isActive = activeLink === link.href;
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`relative font-sans text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors duration-300 z-10 ${
-                  isActive ? "text-white" : "text-secondary hover:text-primary"
-                }`}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="desktopActiveTab"
-                    className="absolute inset-0 bg-primary rounded-full -z-10 shadow-md shadow-primary/20"
-                    transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                  />
-                )}
-                {link.label}
-              </a>
-            );
-          })}
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
+              className={`relative font-sans text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors duration-300 z-10 ${
+                activeLink === link.href
+                  ? "text-white"
+                  : "text-secondary hover:text-primary"
+              }`}
+            >
+              {activeLink === link.href && (
+                <motion.span
+                  layoutId="desktopActiveTab"
+                  className="absolute inset-0 bg-primary rounded-full -z-10 shadow-md shadow-primary/20"
+                  transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                />
+              )}
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        {/* --- DESKTOP CALL TO ACTIONS (CTAs) --- */}
+        {/* ── Desktop CTAs ── */}
         <div className="hidden lg:flex items-center gap-4">
-          <motion.a
+          <a
             href={company.phoneHref}
-            className="w-10 h-10 rounded-full bg-white border border-secondary/20 flex items-center justify-center shadow-sm hover:border-primary/40 text-primary transition-all duration-300 font-feature-tnum"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            title={`Call ${company.name}`}
+            className="w-10 h-10 rounded-full bg-white border border-secondary/20 flex items-center justify-center shadow-sm hover:border-primary/40 text-primary transition-all duration-300"
           >
             <Phone size={14} />
-          </motion.a>
-
-          <a
-            href="#contact"
-            onClick={() => handleNavClick("#contact")}
-            className="btn-primary text-xs uppercase tracking-[0.12em] px-6 h-10 rounded-full flex items-center gap-2 shadow-sm font-bold"
-          >
-            Get Started
-            <ArrowRight size={13} />
           </a>
+          <a
+  href="#contact"
+  onClick={(e) => handleNavClick(e, "#contact")}
+  className="relative group inline-flex items-center gap-2 px-6 h-10 rounded-full font-bold text-xs uppercase tracking-[0.15em] transition-all duration-500 overflow-hidden"
+>
+  {/* 1. Animated Gradient Border (The "Aura") */}
+  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-accent to-highlight p-[1.5px] opacity-70 group-hover:opacity-100 transition-opacity duration-500 animate-[spin_6s_linear_infinite]"></div>
+  
+  {/* 2. Inner Background */}
+  <div className="absolute inset-[1.5px] rounded-full bg-white group-hover:bg-primary transition-colors duration-500"></div>
+  
+  {/* 3. Text & Icon (With color inversion) */}
+  <span className="relative z-10 text-primary group-hover:text-white transition-colors duration-500 flex items-center gap-2">
+    Get Started 
+    <span className="w-5 h-5 rounded-full bg-primary group-hover:bg-white flex items-center justify-center transition-all duration-500">
+      <ArrowRight size={12} className="text-white group-hover:text-primary" />
+    </span>
+  </span>
+</a>
         </div>
 
-        {/* --- MOBILE ACCESSIBLE HAMBURGER TRIGGER --- */}
-        <motion.button
-          aria-label="Toggle Navigation Terminal"
-          className="lg:hidden relative z-50 text-primary p-2 focus:outline-none cursor-pointer bg-slate-100 hover:bg-slate-200/80 rounded-full border border-secondary/10 shadow-sm"
-          onClick={() => setMobileOpen((v) => !v)}
-          whileTap={{ scale: 0.95 }}
+        {/* ── Mobile Hamburger ── */}
+        <button
+          className="lg:hidden relative z-50 text-primary p-2 bg-slate-100 rounded-full border border-secondary/10 shadow-sm"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
-          <div className="w-5 h-5 flex items-center justify-center relative">
-            <AnimatePresence mode="wait">
-              {mobileOpen ? (
-                <motion.div
-                  key="closeIcon"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X size={18} strokeWidth={2.5} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menuIcon"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu size={18} strokeWidth={2.5} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.button>
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
       </nav>
 
-      {/* --- FULL SCREEN HEIGHT MOBILE OVERLAY BLOCK --- */}
+      {/* ── Mobile Overlay ── */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 120 }}
-            className="lg:hidden fixed inset-0 z-40 bg-white h-screen w-screen flex flex-col justify-between px-6 sm:px-10 pt-28 pb-10 overflow-y-auto"
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden fixed inset-0 z-40 bg-white h-screen w-screen flex flex-col justify-between px-6 pt-28 pb-10 overflow-y-auto"
           >
-            {/* Grid Detail Backdrop Decorator */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(11,60,93,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(11,60,93,0.015)_1px,transparent_1px)] bg-[size:2.5rem] pointer-events-none" />
-
-            {/* Navigation Track Stack with Active Node Tracking Lines */}
-            <div className="flex flex-col gap-1 relative z-10 mt-4">
-              {navLinks.map((link, i) => {
-                const isMobileActive = activeLink === link.href;
-                return (
-                  <motion.a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -15 }}
-                    transition={{ delay: i * 0.05, type: "spring" }}
-                    className={`text-2xl font-black py-4 border-b border-slate-100 flex items-center justify-between group cursor-pointer relative ${
-                      isMobileActive ? "text-primary" : "text-secondary hover:text-primary"
-                    }`}
-                  >
-                    <span className="tracking-tight uppercase relative flex items-center">
-                      {/* Active Indicator Node Slider */}
-                      {isMobileActive && (
-                        <motion.span 
-                          layoutId="mobileActiveIndicator"
-                          className="absolute -left-4 w-1.5 h-7 bg-accent rounded-full" 
-                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                        />
-                      )}
-                      <span className={isMobileActive ? "pl-2 transition-all duration-300" : ""}>
-                        {link.label}
-                      </span>
-                    </span>
-                    <span className="font-mono text-xs text-accent font-bold opacity-40 group-active:opacity-100">
-                      // 0{i + 1}
-                    </span>
-                  </motion.a>
-                );
-              })}
+            <div className="flex flex-col gap-1 relative z-10">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06 + 0.1 }}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`text-2xl font-black py-4 border-b transition-colors ${
+                    activeLink === link.href
+                      ? "text-primary border-primary/20"
+                      : "text-secondary border-secondary/10"
+                  }`}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
             </div>
 
-            {/* Mobile Actions Platform Block */}
-            <div className="flex flex-col gap-4 relative z-10 mt-8">
-              <a
-                href="#contact"
-                onClick={() => handleNavClick("#contact")}
-                className="w-full text-center btn-primary py-4 rounded-xl text-sm font-bold uppercase tracking-[0.12em] shadow-lg shadow-primary/10"
-              >
-                Request Consultation
-              </a>
-
+            {/* Mobile CTA inside drawer */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col gap-3"
+            >
               <a
                 href={company.phoneHref}
-                className="flex items-center justify-center gap-2.5 font-mono text-sm font-black text-primary py-2 font-feature-tnum"
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl bg-primary text-white font-bold text-sm"
               >
-                <Phone size={14} className="text-accent" />
-                +91 {company.phone}
+                <Phone size={16} />
+                Call Now
               </a>
-            </div>
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, "#contact")}
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl border border-primary/20 text-primary font-bold text-sm"
+              >
+                Get Started <ArrowRight size={14} />
+              </a>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

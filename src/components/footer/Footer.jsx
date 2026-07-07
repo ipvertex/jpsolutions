@@ -1,180 +1,189 @@
-import { memo, useRef } from "react";
-import { Phone, Mail, MapPin, Clock, Shield } from "lucide-react";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { company, services } from "../../assets/data";
+import { motion } from "framer-motion";
+import { ArrowUpRight, ArrowUp, MapPin, PhoneCall, Mail } from "lucide-react";
+import { company, navLinks, footerCopy } from "../../data/content";
 
 const Footer = () => {
-  const year = 2026; // Hardcoded to track current production deployment year constraints
-  
-  // High-performance hover tracker for ambient blueprint glow
-  const footerRef = useRef(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  const handleMouseMove = ({ currentTarget, clientX, clientY }) => {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+  // Luxurious, slow reveal physics
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+    },
   };
 
   return (
-    <footer 
-      ref={footerRef}
-      onMouseMove={handleMouseMove}
-      className="relative bg-slate-950 text-slate-300 border-t border-slate-800/80 overflow-hidden group/footer"
-    >
-      {/* 1. Structural Backdrop Blueprint Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:3rem] opacity-40 pointer-events-none" />
+    <footer className="relative py-12 md:py-16 overflow-hidden z-20 bg-foreground">
+      
+      {/* Ultra-faint grid background for premium texture */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(background 1.5px, transparent 1.5px)', backgroundSize: '40px 40px' }}></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:160px_160px] pointer-events-none"></div>
+      
+      {/* Dramatic Ambient Glows */}
+      <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/4 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[150px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/4 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-      {/* 2. Cyber Scanning Beam Line Accent */}
-      <div className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-amber-500/20 to-transparent top-0 animate-scanline pointer-events-none" />
-
-      {/* 3. Ambient Interactive Torch Light Layer (Framer Motion Performance Gradient) */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover/footer:opacity-100 transition-opacity duration-700 z-0 hidden md:block"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              450px circle at ${mouseX}px ${mouseY}px,
-              rgba(11, 60, 93, 0.15),
-              transparent 80%
-            )
-          `
-        }}
-      />
-
-      {/* 4. Constant Floating Energy Node Rings (Simulating Smart Electrical Systems) */}
-      <div className="absolute top-1/4 right-10 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none animate-float-slow -z-10" />
-      <div className="absolute bottom-10 left-10 w-80 h-80 bg-amber-500/[0.02] rounded-full blur-[80px] pointer-events-none animate-float-slower -z-10" />
-
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-10 pt-16 sm:pt-20 pb-8 z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-10 md:gap-8 lg:gap-12">
+      <div className="insideContainer">
+        
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-12 lg:mb-16"
+        >
           
-          {/* --- COLUMN 1: JPS SOLUTIONS PROFILE & LOCAL SERVICE AREA --- */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="flex items-center gap-3">
-              <motion.img 
-                src="/logo.png" 
-                alt={`${company.name} — MEP & Infrastructure Contractor Logo`}
-                className="h-10 w-auto object-contain brightness-0 invert"
-                whileHover={{ rotate: [0, -1, 1, 0], scale: 1.02 }}
-                transition={{ duration: 0.5 }}
-              />
-              <div className="border-l-2 border-white/10 pl-3">
-                <span className="text-sm font-black text-white tracking-wider block uppercase leading-none">
-                  {company.name}
-                </span>
-                <span className="text-[9px] text-amber-500 font-bold uppercase tracking-widest block mt-1 leading-none">
-                  All in One Infra Solutions
-                </span>
-              </div>
-            </div>
-
-            <p className="text-sm text-slate-400 font-medium leading-relaxed max-w-sm text-balance">
-              {company.shortPitch || "JPS Solutions is a trusted MEP and infrastructure contractor based in Hapur, serving Ghaziabad, Noida, Greater Noida and Delhi NCR."}
-            </p>
+          {/* COLUMN 1: Brand & Description (5 Columns) */}
+          <motion.div variants={itemVariants} className="lg:col-span-5 pr-0 lg:pr-12">
             
-            {/* Clear Lifecycle Steps for Regular Customers */}
-            <div className="flex flex-wrap gap-x-3 gap-y-1.5 font-mono text-[9px] uppercase tracking-[0.15em] text-amber-500 font-bold">
-              <span className="hover:text-white transition-colors cursor-default">Engineering Design</span>
-              <span className="text-white/10">//</span>
-              <span className="hover:text-white transition-colors cursor-default">Installation</span>
-              <span className="text-white/10">//</span>
-              <span className="hover:text-white transition-colors cursor-default">Safety Compliance</span>
-              <span className="text-white/10">//</span>
-              <span className="hover:text-white transition-colors cursor-default">Maintenance</span>
-            </div>
-          </div>
+            {/* Elegant Brand Logo Area */}
+            <a href="#home" className="inline-block group mb-8">
+              <h2 className="text-3xl lg:text-4xl font-black text-background tracking-tighter flex items-center gap-1.5">
+                JPS
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">
+                  Solutions
+                </span>
+                <span className="w-2.5 h-2.5 rounded-full bg-accent mb-1 group-hover:scale-150 transition-transform duration-500"></span>
+              </h2>
+            </a>
 
-          {/* --- COLUMN 2: COMPLETE SERVICES CORE INDEX --- */}
-          <div className="lg:col-span-5">
-            <h4 className="font-mono font-bold uppercase text-xs tracking-[0.2em] text-white mb-5 border-l-2 border-primary pl-3">
-              Our Services
+            <p className="text-base lg:text-lg text-background font-medium leading-relaxed max-w-md mb-8">
+              {footerCopy.description}
+            </p>
+
+            {/* Premium Frosted Pill Tags */}
+            <div className="flex flex-wrap gap-3">
+              {footerCopy.tags.map((tag, idx) => (
+                <span key={idx} className="px-4 py-1.5 rounded-full border border-background/10 text-[11px] font-bold tracking-[0.15em] uppercase text-background bg-background/5 backdrop-blur-md shadow-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* COLUMN 2: Quick Links (3 Columns) */}
+          <motion.div variants={itemVariants} className="lg:col-span-3">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] text-background uppercase mb-8 flex items-center gap-4">
+              Navigation
+              <div className="h-px flex-1 bg-highlight"></div>
             </h4>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5">
-              {services.map((s, idx) => (
-                <motion.li 
-                  key={s.title}
-                  initial={{ opacity: 0, y: 5 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.03 }}
-                >
-                  <a 
-                    href="#services" 
-                    className="text-sm text-slate-400 hover:text-amber-500 hover:translate-x-1 transition-all duration-300 font-medium flex items-center gap-1.5 group/link"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-slate-800 group-hover/link:bg-amber-500 transition-colors shrink-0" />
-                    <span className="truncate">{s.title}</span>
+            <ul className="space-y-4">
+              {navLinks.map((link, idx) => (
+                <li key={idx}>
+                  <a href={link.href} className="group inline-flex items-center text-background/70 font-medium hover:text-background transition-colors duration-300">
+                    <span className="transform transition-transform duration-500 ease-[0.16,1,0.3,1] group-hover:translate-x-2">
+                      {link.label}
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-4 translate-y-2 group-hover:opacity-100 group-hover:translate-x-2 group-hover:translate-y-0 transition-all duration-500 ease-[0.16,1,0.3,1] text-accent" />
                   </a>
-                </motion.li>
+                </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* --- COLUMN 3: EXACT LOCAL ADDRESS & COORDINATES (NAP) --- */}
-          <div className="lg:col-span-3">
-            <h4 className="font-mono font-bold uppercase text-xs tracking-[0.2em] text-white mb-5 border-l-2 border-primary pl-3">
-              Contact Us
+          {/* COLUMN 3: Contact Headquarters (4 Columns) */}
+          <motion.div variants={itemVariants} className="lg:col-span-4">
+            <h4 className="text-[10px] font-bold tracking-[0.2em] text-background uppercase mb-8 flex items-center gap-4">
+              Headquarters
+              <div className="h-px flex-1 bg-highlight"></div>
             </h4>
-            <ul className="space-y-4 text-sm text-slate-400 font-medium">
-              <li className="flex items-start gap-2.5 group/icon">
-                <Phone size={15} className="text-primary mt-0.5 shrink-0 group-hover/icon:text-amber-500 group-hover/icon:scale-110 transition-all" aria-hidden="true" />
-                <a href={company.phoneHref} className="hover:text-amber-500 transition-colors font-mono font-feature-tnum">
-                  +91 {company.phone}
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5 group/icon">
-                <Mail size={15} className="text-primary mt-0.5 shrink-0 group-hover/icon:text-amber-500 group-hover/icon:scale-110 transition-all" aria-hidden="true" />
-                <a href={`mailto:${company.email}`} className="hover:text-amber-500 transition-colors break-all font-mono">
-                  {company.email}
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <MapPin size={15} className="text-primary mt-0.5 shrink-0 animate-pulse" style={{ animationDuration: '3s' }} aria-hidden="true" />
-                <span className="text-xs leading-relaxed">{company.address}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Clock size={15} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
-                <span className="text-xs leading-snug">{company.hours || "Mon–Sat: 9:00 AM – 7:00 PM"}</span>
-              </li>
-              
-              {/* Visible Business Credentials & Verification */}
-              <li className="flex items-start gap-2.5 border-t border-slate-900 pt-3 mt-1 relative overflow-hidden group/gst">
-                <Shield size={15} className="text-amber-500 shrink-0 mt-0.5 relative z-10 group-hover/gst:rotate-12 transition-transform" aria-hidden="true" />
-                <div className="text-xs font-mono tracking-wide relative z-10">
-                  <span className="text-slate-500 block text-[10px] uppercase font-bold tracking-wider leading-none mb-1">Tax Registration</span>
-                  <span className="text-slate-300 font-feature-tnum block group-hover:text-white transition-colors">GSTIN: {company.gstin}</span>
+            
+            <div className="space-y-6 lg:space-y-8">
+              <a href={company.phoneHref} className="group flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-background/5 border border-background/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:border-primary transition-all duration-500">
+                  <PhoneCall className="w-4 h-4 text-slate-400 group-hover:text-background transition-colors duration-500" />
                 </div>
-              </li>
-            </ul>
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.15em] text-slate-500 uppercase mb-1">Direct Line</div>
+                  <div className="text-base lg:text-lg font-bold text-slate-200 group-hover:text-accent transition-colors duration-300">
+                    {company.phoneDisplay}
+                  </div>
+                </div>
+              </a>
+
+              <a href={company.emailHref} className="group flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-background/5 border border-background/10 flex items-center justify-center shrink-0 group-hover:bg-accent group-hover:border-accent transition-all duration-500">
+                  <Mail className="w-4 h-4 text-slate-400 group-hover:text-background transition-colors duration-500" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.15em] text-slate-500 uppercase mb-1">Email</div>
+                  <div className="text-base lg:text-lg font-bold text-slate-200 group-hover:text-accent transition-colors duration-300">
+                    {company.email}
+                  </div>
+                </div>
+              </a>
+
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-background/5 border border-background/10 flex items-center justify-center shrink-0">
+                  <MapPin className="w-4 h-4 text-slate-400" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.15em] text-slate-500 uppercase mb-1">Location</div>
+                  <div className="text-sm font-medium text-slate-400 leading-relaxed max-w-[200px]">
+                    {company.address}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+        </motion.div>
+
+        {/* MASSIVE ARCHITECTURAL WATERMARK */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full overflow-hidden flex justify-center border-t border-background/10 pt-8"
+        >
+          {/* Animated Glowing Accent Line */}
+          <div className="absolute top-0 left-0 w-full h-px overflow-hidden">
+            <div className="w-full h-full bg-gradient-to-r from-accent via-background to-highlight animate-marquee opacity-100"></div>
           </div>
+
+          <h1 className="text-[12vw] lg:text-[10vw] font-black tracking-tighter leading-[0.8] text-transparent bg-clip-text bg-gradient-to-b from-accent to-highlight/10 select-none w-full text-center">
+            JPS SOLUTIONS
+          </h1>
+        </motion.div>
+
+        {/* BOTTOM UTILITY BAR */}
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 mt-12 relative z-10">
+          
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+            <span>&copy; {new Date().getFullYear()} {company.legalName}.</span>
+            <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-700"></span>
+            <span>All rights reserved.</span>
+            <span className="hidden sm:block w-1 h-1 rounded-full bg-slate-700"></span>
+            <span className="text-slate-400">GSTIN: {company.gstin}</span>
+          </div>
+
+          <div className="text-[0.7rem] uppercase tracking-[0.3em] text-background">
+              Crafted By  <a href="https://ipvertex.in/" target="_blank" rel="noopener noreferrer"  className="text-accent hover:underline transition-all">
+                IP VERTEX
+              </a>
+          </div>
+
+          
+
         </div>
 
-        {/* --- LOWER FOOTER BAND: COPYRIGHT & ATTRIBUTION --- */}
-        <div className="mt-16 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-          <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 text-center sm:text-left">
-            <span>© {year} {company.name}. All rights reserved.</span>
-          </div>
-          
-          {/* IPVERTEX Signature Attribution */}
-          <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-slate-500 flex items-center gap-1">
-            <span>Crafted By</span>
-            <motion.a 
-              href="https://ipvertex.in" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-slate-400 hover:text-amber-500 font-bold transition-colors duration-200 relative block px-1"
-              whileHover={{ scale: 1.05 }}
-            >
-              IPVERTEX
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-amber-500 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </motion.a>
-          </div>
-        </div>
       </div>
     </footer>
   );
 };
 
-export default memo(Footer);
+export default Footer;
