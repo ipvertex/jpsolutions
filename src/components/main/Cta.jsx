@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PhoneCall, MessageSquare, Mail, ArrowRight, Zap } from "lucide-react";
 import { cta, company } from "../../data/content";
+import PrimaryButton from "../ui/PrimaryButton";
 
 const CTA = () => {
   // Premium spring physics for the pop-in effect
@@ -73,15 +74,8 @@ const CTA = () => {
             className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-2xl mx-auto"
           >
             {/* Primary Action: Phone Call (High Urgency) */}
-            <a 
-              href={company.phoneHref}
-              className="w-full sm:w-auto relative group overflow-hidden rounded-2xl bg-accent text-background px-8 py-4.5 font-bold shadow-xl shadow-accent/30 hover:shadow-accent/50 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3"
-            >
-              <span className="absolute inset-0 w-full h-full bg-background/20 -translate-x-full group-hover:animate-[marquee_1.5s_linear_infinite]"></span>
-              <PhoneCall className="w-6 h-6 relative z-10 animate-pulse-soft" />
-              <span className="relative z-10 text-lg tracking-wide">Call {company.phoneDisplay}</span>
-            </a>
-
+            
+            <PrimaryButton href={company.phoneHref} text={`Call ${company.phoneDisplay}`} className="p-8 shadow-sm shadow-background/30"/>
             {/* Secondary Action: WhatsApp (Low Friction) */}
             <a 
               href={company.whatsappHref}

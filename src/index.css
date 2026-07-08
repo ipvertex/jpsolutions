@@ -88,11 +88,11 @@
 }
 
 @utility mainContainer{
-  @apply min-h-screen relative py-16 md:py-24 overflow-hidden z-20; 
+  @apply min-h-screen relative py-16 overflow-hidden z-20; 
 }
 
 @utility insideContainer {
-  @apply relative w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-10;
+  @apply relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-10;
 }
 
 @utility sectionDiv {

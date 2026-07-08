@@ -1,13 +1,14 @@
-import { useEffect, useState, useCallback,useRef } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Phone, ArrowRight } from "lucide-react";
 import { navLinks, company } from "../../assets/data";
+import PrimaryButton from "../ui/PrimaryButton";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("#home");
-  
+
   // NEW: Ref to ignore observer during manual smooth scroll
   const isScrollingRef = useRef(false);
 
@@ -29,7 +30,7 @@ export default function Navbar() {
           }
         });
       },
-      { rootMargin: "-80px 0px -70% 0px" }
+      { rootMargin: "-80px 0px -70% 0px" },
     );
 
     navLinks.forEach((link) => {
@@ -42,7 +43,7 @@ export default function Navbar() {
 
   const handleNavClick = useCallback((e, href) => {
     e.preventDefault();
-    
+
     // 1. Mark as manual scroll
     isScrollingRef.current = true;
     setActiveLink(href);
@@ -51,13 +52,13 @@ export default function Navbar() {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      window.scrollTo({ 
-        top: el.offsetTop - 80, 
-        behavior: "smooth" 
+      window.scrollTo({
+        top: el.offsetTop - 80,
+        behavior: "smooth",
       });
     }
 
-    // 2. Re-enable observer after animation finishes 
+    // 2. Re-enable observer after animation finishes
     // 1000ms is usually enough for smooth scroll to finish
     setTimeout(() => {
       isScrollingRef.current = false;
@@ -78,7 +79,10 @@ export default function Navbar() {
         }`}
       >
         {/* Logo */}
-        <a href="/" className="flex items-center relative z-50 gap-3 cursor-pointer">
+        <a
+          href="/"
+          className="flex items-center relative z-50 gap-3 cursor-pointer"
+        >
           <img
             src="/logo.png"
             alt={`${company.name} Logo`}
@@ -121,25 +125,8 @@ export default function Navbar() {
           >
             <Phone size={14} />
           </a>
-          <a
-  href="#contact"
-  onClick={(e) => handleNavClick(e, "#contact")}
-  className="relative group inline-flex items-center gap-2 px-6 h-10 rounded-full font-bold text-xs uppercase tracking-[0.15em] transition-all duration-500 overflow-hidden"
->
-  {/* 1. Animated Gradient Border (The "Aura") */}
-  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-accent to-highlight p-[1.5px] opacity-70 group-hover:opacity-100 transition-opacity duration-500 animate-[spin_6s_linear_infinite]"></div>
-  
-  {/* 2. Inner Background */}
-  <div className="absolute inset-[1.5px] rounded-full bg-white group-hover:bg-primary transition-colors duration-500"></div>
-  
-  {/* 3. Text & Icon (With color inversion) */}
-  <span className="relative z-10 text-primary group-hover:text-white transition-colors duration-500 flex items-center gap-2">
-    Get Started 
-    <span className="w-5 h-5 rounded-full bg-primary group-hover:bg-white flex items-center justify-center transition-all duration-500">
-      <ArrowRight size={12} className="text-white group-hover:text-primary" />
-    </span>
-  </span>
-</a>
+          
+          <PrimaryButton href="#contact" text="Get Started" />
         </div>
 
         {/* ── Mobile Hamburger ── */}

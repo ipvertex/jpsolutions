@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { whyUsIntro, whyUs } from "../../data/content";
+import PrimaryButton from "../ui/PrimaryButton";
 
 const WhyUs = () => {
   // Premium, heavy spring physics for ultra-smooth reveals
@@ -35,7 +36,7 @@ const WhyUs = () => {
 
         {/* Abstract Ambient Glows for Depth */}
         <div className="absolute top-0 left-0 -translate-y-1/3 -ml-32 w-[700px] h-[700px] bg-[var(--color-primary)]/20 rounded-full blur-[140px]"></div>
-        <div className="absolute bottom-0 right-0 translate-y-1/3 -mr-32 w-[700px] h-[700px] bg-[var(--color-accent)]/15 rounded-full blur-[140px]"></div>
+        <div className="absolute bottom-0 right-0 translate-y-1/3 -mr-32 w-[700px] h-[700px] bg-accent/15 rounded-full blur-[140px]"></div>
       </div>
 
       <div className="insideContainer">
@@ -48,43 +49,39 @@ const WhyUs = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="lg:col-span-5 lg:sticky lg:top-32 flex flex-col justify-center"
+            className="lg:col-span-5 lg:sticky lg:top-32 flex flex-col items-center md:items-start"
           >
             {/* Eyebrow - Dark Mode Variant */}
             <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 backdrop-blur-md shadow-sm border border-white/10 mb-8 w-max">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-highlight)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-accent)]"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
               </span>
               <span className="text-xs sm:text-sm font-bold tracking-[0.15em] text-slate-300 uppercase">{whyUsIntro.eyebrow}</span>
             </motion.div>
 
             {/* Heading with Inverse Gradients */}
-            <motion.h2 variants={itemVariants} className="text-[2.25rem] sm:text-4xl lg:text-[3rem] font-black tracking-tighter text-white leading-[1.1] mb-8">
-              Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-amber-400">Delhi NCR</span> <br />
+            <motion.h2 variants={itemVariants} className="text-[2.25rem] sm:text-4xl lg:text-[3rem] font-black tracking-tighter text-white leading-[1.1] mb-8 text-center md:text-left">
+              Why <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-amber-400">Delhi NCR</span> <br />
               Businesses Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-[var(--color-primary)]">JPS Solutions</span>
             </motion.h2>
             
-            <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-400 leading-relaxed font-medium mb-10 pl-6 border-l-2 border-[var(--color-accent)]/50 relative">
-              <div className="absolute -left-[2px] top-0 h-1/3 w-[2px] bg-[var(--color-accent)] shadow-[0_0_10px_var(--color-accent)]"></div>
+            <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-400 leading-relaxed font-medium mb-10 pl-6 border-l-2 border-accent/50 relative">
+              <div className="absolute -left-[2px] top-0 h-1/3 w-[2px] bg-accent shadow-[0_0_10px_var(--color-accent)]"></div>
               {whyUsIntro.body}
             </motion.p>
 
             {/* Dark Mode CTA Button */}
             <motion.div variants={itemVariants}>
-              <a href="#contact" className="w-full sm:w-auto inline-flex relative group overflow-hidden rounded-xl bg-white text-[var(--color-foreground)] px-8 py-4.5 font-bold shadow-xl shadow-white/5 transition-all duration-300 hover:shadow-white/15 hover:-translate-y-1 items-center justify-center gap-3">
-                <span className="relative z-10 text-[15px] tracking-wide">Start Your Project Today</span>
-                <div className="relative z-10 p-1.5 rounded-lg bg-slate-100 group-hover:bg-[var(--color-accent)] group-hover:text-white transition-colors duration-300">
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-              </a>
+              
+              <PrimaryButton href="#contact" text="Start Your Project Today" className="p-8 shadow-sm shadow-foreground/30"/>
             </motion.div>
 
             {/* Trust Badges */}
             <motion.div variants={itemVariants} className="mt-12 flex flex-wrap items-center gap-6 text-sm font-bold text-slate-500">
               <div className="flex items-center gap-2.5">
                 <div className="p-1.5 rounded-full bg-white/5 border border-white/10">
-                  <ShieldCheck className="w-4 h-4 text-[var(--color-accent)]" />
+                  <ShieldCheck className="w-4 h-4 text-accent" />
                 </div>
                 100% Quality Guaranteed
               </div>
@@ -108,24 +105,24 @@ const WhyUs = () => {
                 <motion.div 
                   key={index}
                   variants={containerVariants}
-                  className={`group relative bg-white/[0.02] backdrop-blur-xl border border-white/5 border-t-white/10 rounded-[2rem] p-8 hover:bg-white/[0.04] transition-all duration-500 overflow-hidden cursor-pointer ${isLastItem ? 'sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-8 sm:p-10 bg-gradient-to-br from-white/[0.04] to-transparent border-t-[var(--color-accent)]/30' : 'flex flex-col'}`}
+                  className={`group relative bg-white/[0.02] backdrop-blur-xl border border-white/5 border-t-white/10 rounded-[2rem] p-8 hover:bg-white/[0.04] transition-all duration-500 overflow-hidden cursor-pointer ${isLastItem ? 'sm:col-span-2 flex flex-col sm:flex-row sm:items-center gap-8 sm:p-10 bg-gradient-to-br from-white/[0.04] to-transparent border-t-accent/30' : 'flex flex-col'}`}
                 >
                   {/* Subtle Hover Gradient Reveal */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   
                   {/* Dynamic Glow Behind Icon */}
-                  <div className={`absolute ${isLastItem ? 'left-10 top-1/2 -translate-y-1/2' : 'left-8 top-8'} bg-[var(--color-accent)] rounded-full blur-[40px] opacity-10 group-hover:opacity-30 transition-opacity duration-500 w-20 h-20 pointer-events-none`}></div>
+                  <div className={`absolute ${isLastItem ? 'left-10 top-1/2 -translate-y-1/2' : 'left-8 top-8'} bg-accent rounded-full blur-[40px] opacity-10 group-hover:opacity-30 transition-opacity duration-500 w-20 h-20 pointer-events-none`}></div>
 
                   {/* Icon Container */}
                   <div className={`relative shrink-0 ${isLastItem ? 'mb-0' : 'mb-8'}`}>
                     <div className="relative w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 shadow-xl shadow-black/20">
-                      <Icon className={`w-7 h-7 drop-shadow-md transition-colors duration-500 ${isLastItem ? 'text-[var(--color-accent)]' : 'text-white group-hover:text-[var(--color-highlight)]'}`} strokeWidth={1.5} />
+                      <Icon className={`w-7 h-7 drop-shadow-md transition-colors duration-500 ${isLastItem ? 'text-accent' : 'text-white group-hover:text-[var(--color-highlight)]'}`} strokeWidth={1.5} />
                     </div>
                   </div>
                   
                   {/* Text Content */}
                   <div className={isLastItem ? 'flex-1' : ''}>
-                    <h3 className={`font-bold text-white mb-3 tracking-wide group-hover:text-[var(--color-accent)] transition-colors duration-300 ${isLastItem ? 'text-2xl' : 'text-xl'}`}>
+                    <h3 className={`font-bold text-white mb-3 tracking-wide group-hover:text-accent transition-colors duration-300 ${isLastItem ? 'text-2xl' : 'text-xl'}`}>
                       {item.title}
                     </h3>
                     <p className={`text-slate-400 leading-relaxed font-medium group-hover:text-slate-300 transition-colors duration-300 ${isLastItem ? 'text-base max-w-xl' : 'text-sm'}`}>
@@ -142,7 +139,7 @@ const WhyUs = () => {
 
                   {/* Animated Accent Line at Bottom (For normal items) */}
                   {!isLastItem && (
-                    <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[var(--color-accent)] to-transparent w-0 group-hover:w-full transition-all duration-700 ease-in-out"></div>
+                    <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-accent to-transparent w-0 group-hover:w-full transition-all duration-700 ease-in-out"></div>
                   )}
                 </motion.div>
               );

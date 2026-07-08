@@ -74,10 +74,10 @@ export const navLinks = [
    HERO
    ======================================================================== */
 export const hero = {
-  eyebrow: "All in One Infra Solution — Ghaziabad & Delhi NCR",
+  eyebrow: "All in One Infra Solution in   Delhi NCR",
   headlineLines: ["COMPLETE MEP &", "INFRASTRUCTURE", "SOLUTION."],
   subhead:
-    "JPS Solution is a trusted MEP and infrastructure contractor based in Hapur, serving Ghaziabad, Noida, Greater Noida and Delhi NCR. We deliver electrical, HVAC, plumbing, fire fighting, solar, EV charging and civil works — design through maintenance — for residential, commercial and industrial projects.",
+    "JPS Solution is a trusted MEP and infrastructure contractor based in Hapur, serving Ghaziabad, Noida, Greater Noida and Delhi NCR. We deliver electrical, HVAC, plumbing, fire fighting, solar, EV charging and civil works design through maintenance for residential, commercial and industrial projects.",
   ctaPrimary: "Get a Free MEP Quote",
   ctaSecondary: "View Our Services",
   ticker: [
@@ -112,10 +112,10 @@ export const stats = [
    ABOUT
    ======================================================================== */
 export const about = {
-  eyebrow: "About Us",
+  eyebrow: "About JPS Solution",
   heading: "A Trusted MEP & Infrastructure Contractor in Ghaziabad, Hapur & Delhi NCR",
   paragraphs: [
-    "JPS Solution is a complete MEP (Mechanical, Electrical & Plumbing) and infrastructure services company based in Hapur, Uttar Pradesh, serving clients across Ghaziabad, Noida, Greater Noida, Meerut and the wider Delhi NCR region.",
+    "JPS Solutions is a trusted Electrical Infrastructure, MEP, Solar, and Construction company based in Hapur, Uttar Pradesh, serving industrial, commercial, and residential clients across Ghaziabad, Noida, Greater Noida, Meerut, and Delhi NCR with complete turnkey project execution.",
     "We provide end-to-end infrastructure solution under one roof — from electrical installations and HVAC systems to plumbing, fire fighting, solar power, EV charging infrastructure, civil works and building compliance — so our clients don't need to coordinate between multiple contractors for a single project.",
     "Our team has handled MEP scopes for residential societies, commercial complexes, industrial plants, hospitals, educational institutions, hotels, retail spaces and IT parks across the NCR region. Every project follows a structured process: design and planning, material procurement, installation, testing and commissioning, and ongoing maintenance through AMC contracts.",
     "We are registered under GSTIN 09DQYPK8396C1ZW and operate from our office at Shop No. 01, JPS Market, Hapur, Uttar Pradesh 245101. Whether you need a single electrical panel installed or a complete MEP package for a new commercial building, JPS Solution delivers with a commitment to safety, code compliance, and on-time execution.",
@@ -222,7 +222,7 @@ export const services = [
    WHY US
    ======================================================================== */
 export const whyUsIntro = {
-  eyebrow: "03 — Why JPS",
+  eyebrow: "Why JPS Solutions",
   heading: "Why Ghaziabad & Delhi NCR Businesses Choose JPS Solution",
   body: "We don't just hand over a finished system — we stand behind it. Here's what working with a local MEP contractor based in Hapur, serving Ghaziabad and NCR, looks like in practice.",
 };

@@ -5,6 +5,7 @@ import evstation from "../../assets/images/evstation.jpg";
 import civilwork from "../../assets/images/civilwork.jpg";
 import electricalwork from "../../assets/images/electricalwork.jpg";
 import solarpanel from "../../assets/images/solarpanel.jpg";
+import PrimaryButton from "../ui/PrimaryButton";
 
 const Hero = () => {
   // Premium, heavier spring physics for an "agency" feel
@@ -29,8 +30,7 @@ const Hero = () => {
   ];
 
   return (
-    <section id="home" className="mainContainer flex items-center">
-      
+    <section id="home" className="mainContainer flex items-center pt-20 md:pt-32">      
       {/* Abstract Animated Background Glows */}
       <div className="absolute top-0 right-0 -mr-32 -mt-32 w-[500px] h-[500px] bg-[var(--color-accent)]/10 rounded-full blur-[100px] pointer-events-none animate-pulse-slow"></div>
       <div className="absolute bottom-10 left-0 -ml-32 w-[400px] h-[400px] bg-[var(--color-highlight)]/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -43,7 +43,7 @@ const Hero = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-2xl order-2 lg:order-1"
+          className="order-2 lg:order-1 flex flex-col items-center md:items-start"
         >
           {/* Eyebrow Badge */}
           <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-background/60 backdrop-blur-sm shadow-sm border border-slate-200/60 mb-8 w-max transition-all hover:bg-background/80">
@@ -68,34 +68,21 @@ const Hero = () => {
           </motion.div>
           
           {/* Subheadline */}
-          <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-600 mb-10 max-w-lg leading-relaxed font-medium">
+          <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-600 mb-10 max-w-lg leading-relaxed font-medium text-justify">
             {hero.subhead}
           </motion.p>
           
           {/* Premium Interactive Buttons */}
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-            <a href="#contact" className="w-full sm:w-auto relative group overflow-hidden rounded-xl bg-[var(--color-primary)] text-background px-8 py-4 font-semibold shadow-xl shadow-[var(--color-primary)]/20 transition-all duration-300 hover:shadow-[var(--color-primary)]/40 hover:-translate-y-1 flex items-center justify-center gap-2">
-              <span className="relative z-10 flex items-center gap-2">
-                {hero.ctaPrimary}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </span>
-              <div className="absolute inset-0 bg-background/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-            </a>
+            
+            <PrimaryButton href="#contact" text={hero.ctaPrimary} className="p-8 shadow-sm shadow-foreground/30"/>
             
             <a href="#services" className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-foreground border-2 border-slate-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] bg-transparent hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-2 group">
               {hero.ctaSecondary}
             </a>
           </motion.div>
 
-          {/* Quick Trust Indicators */}
-          {/* <motion.div variants={itemVariants} className="mt-10 flex items-center gap-6 text-sm font-medium text-slate-500">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[var(--color-highlight)]" /> Certified Experts
-            </div>
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[var(--color-highlight)]" /> 100% Compliance
-            </div>
-          </motion.div> */}
+          
         </motion.div>
 
         {/* IMAGE GRID - Mobile: Top, Desktop: Right */}

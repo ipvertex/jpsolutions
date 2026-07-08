@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { servicesIntro, services } from "../../data/content";
+import PrimaryButton from "../ui/PrimaryButton";
 
 const Services = () => {
   // Premium staggered animation physics
@@ -139,14 +140,7 @@ const Services = () => {
           transition={{ delay: 0.4 }}
           className="mt-20 text-center flex justify-center"
         >
-          <a href="#contact" className="group relative overflow-hidden rounded-xl bg-foreground border border-slate-700 px-10 py-5 font-bold text-background shadow-2xl shadow-foreground/20 hover:shadow-foreground/40 transition-all duration-300 flex items-center gap-4 hover:-translate-y-1">
-            <span className="relative z-10 tracking-wide">Discuss Your Project Requirements</span>
-            <div className="relative z-10 p-2 rounded-lg bg-background/10 group-hover:bg-accent transition-colors duration-300">
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </div>
-            {/* Subtle glow overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-background/5 to-transparent -translate-x-full group-hover:animate-[marquee_2s_linear_infinite]"></div>
-          </a>
+          <PrimaryButton href="#contact" text="Discuss Your Project Requirements"  className="p-8 shadow-sm shadow-foreground/30"/>
         </motion.div>
 
       </div>
