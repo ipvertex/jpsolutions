@@ -35,21 +35,21 @@ const Contact = () => {
 
   return (
     // Locked to viewport height on desktop (lg:h-screen)
-    <section id="contact" className="mainContainer bg-foreground/10">
+    <section id="contact" className="mainContainer bg-foreground">
       <div className="insideContainer">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* LEFT COLUMN - Editorial Information Hub */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="lg:col-span-5 flex flex-col justify-center items-center md:items-start"
+            className="lg:col-span-5 flex flex-col justify-center items-center md:items-start gap-6 "
           >
             {/* Elite Eyebrow */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white backdrop-blur-md shadow-sm border border-slate-200/80 mb-6 w-max"
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white backdrop-blur-md shadow-sm border border-background/80 w-max"
             >
               <div className="relative flex items-center justify-center">
                 <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-accent opacity-60"></span>
@@ -60,37 +60,23 @@ const Contact = () => {
               </span>
             </motion.div>
 
-            {/* Massive Editorial Heading - Tight Leading */}
-            <motion.h2
-              variants={itemVariants}
-              className="text-4xl lg:text-[3.25rem] font-black tracking-tighter text-foreground leading-[1.05] mb-6"
-            >
-              Let's build <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                something
-              </span>{" "}
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-amber-500">
-                exceptional.
-              </span>
-            </motion.h2>
-
-            {/* Headline with Gradient Accents */}
-                      <motion.div variants={itemVariants}>
-                        <h1 className="text-[2.5rem] sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-foreground leading-[1.05] mb-6">
-                          Let's build <br />
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-blue-700 drop-shadow-sm">
-                            something
-                          </span> <br />
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent)] to-amber-500 drop-shadow-sm">
-                            exceptional.
-                          </span>
-                        </h1>
-                      </motion.div>
+            {/* Headline with linear Accents */}
+            <motion.div variants={itemVariants}>
+              <h1 className="text-[2.5rem] sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-background leading-[1.05] mb-6">
+                Let's build <br />
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-secondary to-blue-700 drop-shadow-sm">
+                  something
+                </span>{" "}
+                <br />
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-highlight drop-shadow-sm">
+                  exceptional.
+                </span>
+              </h1>
+            </motion.div>
 
             <motion.p
               variants={itemVariants}
-              className="text-sm lg:text-base text-slate-500 leading-relaxed font-medium mb-8 max-w-sm"
+              className="text-sm lg:text-base text-background/80 leading-relaxed font-medium max-w-xl text-justify"
             >
               {contactIntro.body}
             </motion.p>
@@ -98,32 +84,32 @@ const Contact = () => {
             {/* Compressed Contact Grid */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 border-l-2 border-primary/10 pl-5"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 border-l-4 border-highlight pl-4 mt-4"
             >
               <a href={company.phoneHref} className="group block">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-2">
-                  <PhoneCall className="w-3.5 h-3.5 text-accent" /> Direct Line
+                <div className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1.5 flex items-center gap-2">
+                  <PhoneCall className="w-3.5 h-3.5 text-highlight" /> Direct Line
                 </div>
-                <div className="text-lg lg:text-xl font-black text-foreground group-hover:text-primary transition-colors duration-300">
+                <div className="text-lg lg:text-xl font-black text-background/80 group-hover:text-highlight transition-colors duration-500">
                   {company.phoneDisplay}
                 </div>
               </a>
 
               <a href={company.emailHref} className="group block">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5" /> Email
+                <div className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1.5 flex items-center gap-2">
+                  <Mail className="w-3.5 h-3.5 text-highlight" /> Email
                 </div>
-                <div className="text-sm lg:text-base font-bold text-foreground group-hover:text-accent transition-colors duration-300 flex items-center gap-1">
+                <div className="text-sm lg:text-base font-bold text-background/80 group-hover:text-highlight transition-colors duration-300 flex items-center gap-1">
                   {company.email}{" "}
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
                 </div>
               </a>
 
               <div className="sm:col-span-2 group block">
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5" /> Headquarters
+                <div className="text-[10px] font-bold text-secondary uppercase tracking-widest mb-1.5 flex items-center gap-2">
+                  <MapPin className="w-3.5 h-3.5 text-highlight" /> Headquarters
                 </div>
-                <div className="text-sm font-medium text-slate-600 leading-relaxed max-w-xs group-hover:text-foreground transition-colors duration-300">
+                <div className="text-sm font-medium text-background/80 leading-relaxed max-w-sm group-hover:text-highlight transition-colors duration-300">
                   {company.address}
                 </div>
               </div>
@@ -174,7 +160,7 @@ const Contact = () => {
                   <div className="space-y-1.5 group">
                     <label
                       htmlFor="name"
-                      className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
+                      className="text-[9px] font-bold text-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
                     >
                       Full Name
                     </label>
@@ -182,7 +168,7 @@ const Contact = () => {
                       type="text"
                       id="name"
                       required
-                      className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
+                      className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-foreground focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
                       placeholder="John Doe"
                     />
                   </div>
@@ -191,7 +177,7 @@ const Contact = () => {
                   <div className="space-y-1.5 group">
                     <label
                       htmlFor="phone"
-                      className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
+                      className="text-[9px] font-bold text-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
                     >
                       Phone Number
                     </label>
@@ -199,7 +185,7 @@ const Contact = () => {
                       type="tel"
                       id="phone"
                       required
-                      className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
+                      className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-foreground focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
                       placeholder="+91 98765 43210"
                     />
                   </div>
@@ -209,14 +195,14 @@ const Contact = () => {
                 <div className="space-y-1.5 group">
                   <label
                     htmlFor="email"
-                    className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
+                    className="text-[9px] font-bold text-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
                   >
                     Email Address
                   </label>
                   <input
                     type="email"
                     id="email"
-                    className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-foreground focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300"
                     placeholder="john@company.com"
                   />
                 </div>
@@ -225,7 +211,7 @@ const Contact = () => {
                 <div className="space-y-1.5 group">
                   <label
                     htmlFor="service"
-                    className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
+                    className="text-[9px] font-bold text-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
                   >
                     Area of Interest
                   </label>
@@ -244,7 +230,7 @@ const Contact = () => {
                         </option>
                       ))}
                     </select>
-                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary">
+                    <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-foreground group-focus-within:text-primary">
                       <svg
                         width="10"
                         height="6"
@@ -268,7 +254,7 @@ const Contact = () => {
                 <div className="space-y-1.5 group">
                   <label
                     htmlFor="message"
-                    className="text-[9px] font-bold text-slate-400 uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
+                    className="text-[9px] font-bold text-foreground uppercase tracking-widest ml-1 group-focus-within:text-primary transition-colors"
                   >
                     Project Details
                   </label>
@@ -276,7 +262,7 @@ const Contact = () => {
                     id="message"
                     rows="3"
                     required
-                    className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300 resize-none"
+                    className="w-full bg-slate-50/50 hover:bg-slate-50 border border-slate-200/60 rounded-xl px-4 py-3 text-sm font-medium text-foreground placeholder-foreground focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300 resize-none"
                     placeholder="Tell us about your scope, requirements, or timeline..."
                   ></textarea>
                 </div>
@@ -290,7 +276,7 @@ const Contact = () => {
                     Submit Inquiry
                   </span>
                   <Send className="w-3.5 h-3.5 relative z-10 text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[marquee_2s_linear_infinite]"></div>
+                  <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[marquee_2s_linear_infinite]"></div>
                 </button>
 
                 {/* Micro Trust Indicator */}

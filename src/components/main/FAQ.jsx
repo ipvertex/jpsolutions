@@ -37,26 +37,29 @@ const FAQ = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="lg:col-span-5 lg:sticky lg:top-40 pr-0 lg:pr-8"
+            className="lg:col-span-5 lg:sticky lg:top-0 pr-0 lg:pr-8 flex flex-col items-center md:items-start"
           >
             {/* Standardized Elite Eyebrow (Matched to Hero/About) */}
             <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm shadow-sm border border-slate-200/60 mb-8 w-max transition-all hover:bg-white/80">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-highlight)] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-accent)]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-highlight opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
               </span>
-              <span className="text-xs sm:text-sm font-semibold tracking-wide text-[var(--color-secondary)] uppercase">
+              <span className="text-xs sm:text-sm font-semibold tracking-wide text-secondary uppercase">
                 {faqIntro.eyebrow}
               </span>
             </motion.div>
 
-            {/* Massive Editorial Heading */}
-            <motion.h2 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-[var(--color-foreground)] leading-[1.05] mb-8">
-              Radical <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">Clarity.</span>
-            </motion.h2>
+            <motion.div variants={itemVariants}>
+              <h1 className="text-[2.5rem] sm:text-5xl lg:text-[4rem] font-black tracking-tighter text-foreground leading-[1.05] mb-6">
+                Radical <br />
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-secondary to-blue-700 drop-shadow-sm">
+                  Clarity.
+                </span>
+              </h1>
+            </motion.div>
 
-            <motion.p variants={itemVariants} className="text-base lg:text-lg text-slate-500 leading-relaxed font-medium mb-12 max-w-sm">
+            <motion.p variants={itemVariants} className="text-base lg:text-lg text-secondary leading-relaxed font-medium mb-12 max-w-xl text-justify">
               {faqIntro.body}
             </motion.p>
 
@@ -75,7 +78,7 @@ const FAQ = () => {
                   <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] group-hover:text-[#25D366] transition-colors duration-500">
                     Live Chat
                   </span>
-                  <span className="text-sm sm:text-base font-bold text-[var(--color-foreground)]">
+                  <span className="text-sm sm:text-base font-bold text-foreground">
                     Still have questions?
                   </span>
                 </div>
@@ -92,7 +95,7 @@ const FAQ = () => {
             className="lg:col-span-7 relative"
           >
             {/* The Accordion Container */}
-            <div className="border-t border-slate-200/80">
+            <div className="border-t border-highlight/30 pl-4">
               {faqs.map((faq, index) => {
                 const isActive = activeIndex === index;
                 const formattedNumber = (index + 1).toString().padStart(2, '0');
@@ -101,17 +104,17 @@ const FAQ = () => {
                   <motion.div 
                     key={index} 
                     variants={itemVariants}
-                    className="group relative border-b border-slate-200/80"
+                    className="group relative border-b border-highlight/30"
                   >
                     {/* Active State Vertical Indicator Line */}
-                    <div className={`absolute top-0 -left-4 lg:-left-8 w-1 bg-gradient-to-b from-[var(--color-primary)] to-[var(--color-accent)] transition-all duration-700 ease-[0.16,1,0.3,1] ${isActive ? 'h-full opacity-100' : 'h-0 opacity-0'}`}></div>
+                    <div className={`absolute top-0 -left-4 lg:-left-8 w-1 bg-highlight transition-all duration-700 ease-[0.16,1,0.3,1] ${isActive ? 'h-full opacity-100' : 'h-0 opacity-0'}`}></div>
 
                     <button
                       onClick={() => setActiveIndex(isActive ? null : index)}
                       className="w-full flex items-start gap-5 sm:gap-8 py-8 lg:py-10 text-left focus:outline-none"
                     >
                       {/* Editorial Index Number */}
-                      <span className={`text-xs font-bold tracking-[0.2em] mt-1.5 transition-colors duration-500 shrink-0 ${isActive ? 'text-[var(--color-accent)]' : 'text-slate-300 group-hover:text-[var(--color-secondary)]'}`}>
+                      <span className={`text-xs font-bold tracking-[0.2em] mt-1.5 transition-colors duration-500 shrink-0 ${isActive ? 'text-accent' : 'text-slate-300 group-hover:text-secondary'}`}>
                         {formattedNumber}
                       </span>
                       
@@ -119,14 +122,14 @@ const FAQ = () => {
                         <div className="flex items-start justify-between gap-6">
                           
                           {/* Hover X-Axis Glide Effect */}
-                          <h3 className={`text-lg sm:text-xl lg:text-[1.45rem] font-bold tracking-tight leading-[1.3] transition-all duration-700 ease-[0.16,1,0.3,1] pr-4 ${isActive ? 'text-[var(--color-primary)] translate-x-2' : 'text-[var(--color-foreground)] group-hover:translate-x-2'}`}>
+                          <h3 className={`text-lg sm:text-xl lg:text-[1.45rem] font-bold tracking-tight leading-[1.3] transition-all duration-700 ease-[0.16,1,0.3,1] pr-4 ${isActive ? 'text-primary translate-x-2' : 'text-[var(--color-foreground)] group-hover:translate-x-2'}`}>
                             {faq.question}
                           </h3>
                           
                           {/* Engineered Circular Toggle Icon */}
-                          <div className={`shrink-0 w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-700 ease-[0.16,1,0.3,1] ${isActive ? 'bg-[var(--color-primary)] border-[var(--color-primary)] rotate-45' : 'bg-transparent border-slate-200 group-hover:border-[var(--color-primary)] rotate-0'}`}>
+                          <div className={`shrink-0 w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-700 ease-[0.16,1,0.3,1] ${isActive ? 'bg-primary border-primary rotate-45' : 'bg-transparent border-slate-200 group-hover:border-primary rotate-0'}`}>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                              <path d="M12 5V19M5 12H19" className={`transition-colors duration-500 ${isActive ? 'text-white' : 'text-[var(--color-secondary)] group-hover:text-[var(--color-primary)]'}`} />
+                              <path d="M12 5V19M5 12H19" className={`transition-colors duration-500 ${isActive ? 'text-white' : 'text-secondary group-hover:text-primary'}`} />
                             </svg>
                           </div>
                           

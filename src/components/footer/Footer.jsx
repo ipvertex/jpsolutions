@@ -29,21 +29,28 @@ const Footer = () => {
     <footer className="relative py-12 md:py-16 overflow-hidden z-20 bg-foreground">
       
       {/* Ultra-faint grid background for premium texture */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(background 1.5px, transparent 1.5px)', backgroundSize: '40px 40px' }}></div>
-      <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:160px_160px] pointer-events-none"></div>
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-linear(background 1.5px, transparent 1.5px)', backgroundSize: '40px 40px' }}></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-[linear-linear(to_right,#ffffff05_1px,transparent_1px),linear-linear(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:160px_160px] pointer-events-none"></div>
       
       {/* Dramatic Ambient Glows */}
       <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/4 w-[800px] h-[800px] bg-primary/20 rounded-full blur-[150px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 translate-y-1/2 translate-x-1/4 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[150px] pointer-events-none"></div>
+      {/* Decorative Background Text */}
+      <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} className="absolute left-[6%] md:left-[14%] bottom-34 md:bottom-10 text-[3rem] md:text-[10rem] font-black text-background/10 select-none pointer-events-none tracking-tighter">
+        JPS SOLUTIONS
+      </motion.div>
+      <div className="insideContainer">  
 
-      <div className="insideContainer">
-        
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-12 lg:mb-16"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-12 lg:mb-40"
         >
           
           {/* COLUMN 1: Brand & Description (5 Columns) */}
@@ -53,7 +60,7 @@ const Footer = () => {
             <a href="#home" className="inline-block group mb-8">
               <h2 className="text-3xl lg:text-4xl font-black text-background tracking-tighter flex items-center gap-1.5">
                 JPS
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-highlight">
+                <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-highlight">
                   Solutions
                 </span>
                 <span className="w-2.5 h-2.5 rounded-full bg-accent mb-1 group-hover:scale-150 transition-transform duration-500"></span>
@@ -142,26 +149,10 @@ const Footer = () => {
 
         </motion.div>
 
-        {/* MASSIVE ARCHITECTURAL WATERMARK */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full overflow-hidden flex justify-center border-t border-background/10 pt-8"
-        >
-          {/* Animated Glowing Accent Line */}
-          <div className="absolute top-0 left-0 w-full h-px overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-r from-accent via-background to-highlight animate-marquee opacity-100"></div>
-          </div>
-
-          <h1 className="text-[12vw] lg:text-[10vw] font-black tracking-tighter leading-[0.8] text-transparent bg-clip-text bg-gradient-to-b from-accent to-highlight/10 select-none w-full text-center">
-            JPS SOLUTIONS
-          </h1>
-        </motion.div>
+        
 
         {/* BOTTOM UTILITY BAR */}
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 mt-12 relative z-10">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 mt-12 ">
           
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-[11px] font-bold tracking-wider text-slate-500 uppercase">
             <span>&copy; {new Date().getFullYear()} {company.legalName}.</span>

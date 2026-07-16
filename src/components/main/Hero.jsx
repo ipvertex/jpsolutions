@@ -6,6 +6,7 @@ import civilwork from "../../assets/images/civilwork.jpg";
 import electricalwork from "../../assets/images/electricalwork.jpg";
 import solarpanel from "../../assets/images/solarpanel.jpg";
 import PrimaryButton from "../ui/PrimaryButton";
+import SecondaryButton from "../ui/SecondaryButton";
 
 const Hero = () => {
   // Premium, heavier spring physics for an "agency" feel
@@ -76,10 +77,8 @@ const Hero = () => {
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             
             <PrimaryButton href="#contact" text={hero.ctaPrimary} className="p-8 shadow-sm shadow-foreground/30"/>
-            
-            <a href="#services" className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-foreground border-2 border-slate-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] bg-transparent hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-2 group">
-              {hero.ctaSecondary}
-            </a>
+
+            <SecondaryButton href="#services" name={hero.ctaSecondary} />
           </motion.div>
 
           

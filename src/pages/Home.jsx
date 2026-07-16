@@ -8,11 +8,13 @@ import WhyUs from "../components/main/WhyUs";
 import Cta from "../components/main/Cta";
 import Contact from "../components/main/Contact";
 import FAQ from "../components/main/FAQ";
-import Brand from "../components/main/Brand";
+
+import Brand from "../components/ui/Brand";
 import FloatingActions from "../components/ui/FloatingActions";
 
 
 import Footer from "../components/footer/Footer";
+import Marquee from "../components/ui/Marquee";
 const Home = () =>{
     return(
         <>
@@ -22,9 +24,12 @@ const Home = () =>{
             {/* Main Section Code */}
             <div> 
                 <Hero />
+                <Marquee />
                 <About />
                 <Services />
+                <Brand />
                 <WhyUs />
+                
                 <Cta />
                 <Contact />
                 <FAQ />

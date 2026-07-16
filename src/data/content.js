@@ -34,18 +34,26 @@ import electricalmaterial from "../assets/images/electricalmaterial.jpg";
 import civilwork from "../assets/images/civilwork.jpg";
 import buildingComplience from "../assets/images/buildingComplience.jpg";
 
+import Deye from "../assets/brands/deye.jpeg";
+import exoticaGroup from "../assets/brands/exoticaGroup.png";
+import jubilant from "../assets/brands/jubilant.jpeg";
+import DeloomSolarye from "../assets/brands/loomSolar.jpeg";
+import NDMC from "../assets/brands/NDMC.png";
+import Nhai from "../assets/brands/nhai.jpeg";
+import okaya from "../assets/brands/okaya.jpeg";
+import utlSolar from "../assets/brands/utlSolar.jpeg";
 
 /* ========================================================================
-   COMPANY / NAP — single source of truth, reused in schema, footer, contact
+   COMPANY / NAP single source of truth, reused in schema, footer, contact
    ======================================================================== */
 export const company = {
   name: "JPS Solution",
   legalName: "JPS Solution",
   tagline: "All in One Infra Solution",
   shortPitch: "Complete MEP & Infrastructure Solution Under One Roof",
-  phone: "9958583165",
-  phoneDisplay: "+91 9958583165",
-  phoneHref: "tel:+919958583165",
+  phone: "9756117457",
+  phoneDisplay: "+91 9756117457",
+  phoneHref: "tel:+919756117457",
   email: "jpssolutions.services@gmail.com",
   emailHref: "mailto:jpssolutions.services@gmail.com",
   city: "Hapur",
@@ -54,9 +62,20 @@ export const company = {
   serviceArea: "Ghaziabad, Hapur, Noida, Greater Noida, Delhi NCR",
   hours: "Monday – Saturday, 9:00 AM – 7:00 PM",
   gstin: "09DQYPK8396C1ZW",
-  whatsappHref: "https://wa.me/919958583165",
+  whatsappHref: "https://wa.me/919756117457",
   domain: "https://www.jpssolution.in",
 };
+
+export const brands =[
+{ name: "Deye", logo: Deye },
+{ name: "Exotica Group", logo: exoticaGroup },
+{ name: "Jubilant", logo: jubilant },
+{ name: "Deloom Solar", logo: DeloomSolarye },
+{ name: "NDMC", logo: NDMC },
+{ name: "NHAI", logo: Nhai },
+{ name: "Okaya", logo: okaya },
+{ name: "UTL Solar", logo: utlSolar },
+];
 
 /* ========================================================================
    NAVIGATION
@@ -99,7 +118,7 @@ export const hero = {
 };
 
 /* ========================================================================
-   STATS (used in About / credibility strip — no parallax, static band)
+   STATS (used in About / credibility strip no parallax, static band)
    ======================================================================== */
 export const stats = [
   { value: 11, suffix: "+", label: "Service Verticals" },
@@ -116,7 +135,7 @@ export const about = {
   heading: "A Trusted MEP & Infrastructure Contractor in Ghaziabad, Hapur & Delhi NCR",
   paragraphs: [
     "JPS Solutions is a trusted Electrical Infrastructure, MEP, Solar, and Construction company based in Hapur, Uttar Pradesh, serving industrial, commercial, and residential clients across Ghaziabad, Noida, Greater Noida, Meerut, and Delhi NCR with complete turnkey project execution.",
-    "We provide end-to-end infrastructure solution under one roof — from electrical installations and HVAC systems to plumbing, fire fighting, solar power, EV charging infrastructure, civil works and building compliance — so our clients don't need to coordinate between multiple contractors for a single project.",
+    "We provide end-to-end infrastructure solution under one roof from electrical installations and HVAC systems to plumbing, fire fighting, solar power, EV charging infrastructure, civil works and building compliance so our clients don't need to coordinate between multiple contractors for a single project.",
     "Our team has handled MEP scopes for residential societies, commercial complexes, industrial plants, hospitals, educational institutions, hotels, retail spaces and IT parks across the NCR region. Every project follows a structured process: design and planning, material procurement, installation, testing and commissioning, and ongoing maintenance through AMC contracts.",
     "We are registered under GSTIN 09DQYPK8396C1ZW and operate from our office at Shop No. 01, JPS Market, Hapur, Uttar Pradesh 245101. Whether you need a single electrical panel installed or a complete MEP package for a new commercial building, JPS Solution delivers with a commitment to safety, code compliance, and on-time execution.",
   ],
@@ -127,12 +146,12 @@ export const about = {
 };
 
 /* ========================================================================
-   SERVICES — h3 + one-line SEO description + supporting bullets per card
+   SERVICES h3 + one-line SEO description + supporting bullets per card
    ======================================================================== */
 export const servicesIntro = {
   eyebrow: "What We Do",
   heading: "MEP & Infrastructure Services in Ghaziabad and Delhi NCR",
-  body: "From the first electrical drawing to the last service call, JPS Solution plans, installs, tests and maintains every MEP system inside your building. Below are our core service verticals — each backed by an experienced, safety-certified team serving Ghaziabad, Hapur, Noida and the NCR region.",
+  body: "From the first electrical drawing to the last service call, JPS Solution plans, installs, tests and maintains every MEP system inside your building. Below are our core service verticals each backed by an experienced, safety-certified team serving Ghaziabad, Hapur, Noida and the NCR region.",
 };
 
 export const services = [
@@ -141,7 +160,7 @@ export const services = [
     title: "Solar System Solution",
     image: SolarPanel,
     description:
-      "Rooftop solar installation — on-grid and off-grid — including design, supply, commissioning and ongoing operation & maintenance.",
+      "Rooftop solar installation on-grid and off-grid including design, supply, commissioning and ongoing operation & maintenance.",
     items: [
       "Rooftop solar installation",
       "On-grid & off-grid systems",
@@ -224,7 +243,7 @@ export const services = [
 export const whyUsIntro = {
   eyebrow: "Why JPS Solutions",
   heading: "Why Ghaziabad & Delhi NCR Businesses Choose JPS Solution",
-  body: "We don't just hand over a finished system — we stand behind it. Here's what working with a local MEP contractor based in Hapur, serving Ghaziabad and NCR, looks like in practice.",
+  body: "We don't just hand over a finished system we stand behind it. Here's what working with a local MEP contractor based in Hapur, serving Ghaziabad and NCR, looks like in practice.",
 };
 
 export const whyUs = [
@@ -246,12 +265,12 @@ export const whyUs = [
   {
     icon: Wallet,
     title: "Competitive Pricing",
-    text: "Transparent, itemised quotes with no hidden costs — value engineered for your budget.",
+    text: "Transparent, itemised quotes with no hidden costs value engineered for your budget.",
   },
   {
     icon: Layers,
     title: "End-to-End Solution",
-    text: "From design and procurement to installation, testing and compliance — one team, one accountability.",
+    text: "From design and procurement to installation, testing and compliance one team, one accountability.",
   },
   {
     icon: HeartHandshake,
@@ -271,7 +290,7 @@ export const whyUs = [
 export const industriesIntro = {
   eyebrow: "Who We Serve",
   heading: "Industries We Serve Across Ghaziabad & Delhi NCR",
-  body: "JPS Solution has delivered MEP and infrastructure projects across every major sector in the NCR region — from residential societies in Ghaziabad to industrial plants in Hapur and IT parks in Noida.",
+  body: "JPS Solution has delivered MEP and infrastructure projects across every major sector in the NCR region from residential societies in Ghaziabad to industrial plants in Hapur and IT parks in Noida.",
 };
 
 export const industries = [
@@ -286,7 +305,7 @@ export const industries = [
 ];
 
 /* ========================================================================
-   FAQ — must mirror index.html FAQPage schema exactly
+   FAQ must mirror index.html FAQPage schema exactly
    ======================================================================== */
 export const faqIntro = {
   eyebrow: "Questions",
@@ -303,12 +322,12 @@ export const faqs = [
   {
     question: "Does JPS Solution operate in Delhi NCR?",
     answer:
-      "Yes. JPS Solution serves clients across Delhi NCR including Ghaziabad, Hapur, Noida, Greater Noida and Delhi for all MEP and infrastructure projects — residential, commercial, industrial and institutional.",
+      "Yes. JPS Solution serves clients across Delhi NCR including Ghaziabad, Hapur, Noida, Greater Noida and Delhi for all MEP and infrastructure projects residential, commercial, industrial and institutional.",
   },
   {
     question: "How can I get a free quote from JPS Solution?",
     answer:
-      "You can call or WhatsApp us at +91 9958583165, or email jpssolution.services@gmail.com. We provide a free site assessment and detailed scope & quote for all MEP and infrastructure projects.",
+      "You can call or WhatsApp us at +91 9756117457, or email jpssolution.services@gmail.com. We provide a free site assessment and detailed scope & quote for all MEP and infrastructure projects.",
   },
   {
     question: "Does JPS Solution handle building compliance and fire safety audits?",
@@ -327,8 +346,8 @@ export const faqs = [
    ======================================================================== */
 export const contactIntro = {
   eyebrow: "Get In Touch",
-  heading: "Contact JPS Solution — Get a Free Quote in Ghaziabad & Delhi NCR",
-  body: "Share a few details about your project and our team will respond with a tailored scope and quote — usually within one business day. For urgent requirements, call or WhatsApp us directly.",
+  heading: "Contact JPS Solution Get a Free Quote in Ghaziabad & Delhi NCR",
+  body: "Share a few details about your project and our team will respond with a tailored scope and quote usually within one business day. For urgent requirements, call or WhatsApp us directly.",
 };
 
 export const serviceOptions = services.map((s) => s.title);
