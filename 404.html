@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>JPS Solution</title>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // Redirects any 404 URL to index.html with the requested path stored in sessionStorage
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (location.pathname != '/') {
+          sessionStorage.redirect = location.pathname + location.search + location.hash;
+          location.replace('/');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
